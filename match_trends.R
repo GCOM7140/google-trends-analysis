@@ -8,7 +8,7 @@ library(gtrendsR)
 
 # Specify google trend csv file path, search term(s), and time period
 
-csv <- "/google_trends/data/multiTimeline-24.csv"
+csv <- "/Users/malcolm_mashig/Downloads/multiTimeline-24.csv"
 search_term <- '"juice laundry"'
 time_span <- "2018-01-01 2018-12-31"
 
