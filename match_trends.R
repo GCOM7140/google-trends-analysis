@@ -8,6 +8,9 @@ library(gtrendsR)
 
 # Specify google trend csv file path, search term(s), and time period
 
+# @Malcolm, adding file paths that don’t work on other people’s computers makes
+# a script not reproducible. Could you please add this data to the repo in a
+# folder called "data" and read it in from there?
 csv <- "/Users/malcolm_mashig/Downloads/multiTimeline-24.csv"
 search_term <- '"juice laundry"'
 time_span <- "2018-01-01 2018-12-31"
