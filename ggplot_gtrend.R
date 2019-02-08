@@ -13,9 +13,9 @@ library(gtrendsR)
 # But capitalization would not make a difference
 # Ex. the juice laundry vs. The Juice Laundry
 
-search_terms <- c('The Juice Laundry', '"The Juice Laundry"', 
-                  '"Juice Laundry"', "juice laundry")
-time_span <- "2018-01-01 2018-12-31"
+search_terms <- c('The Juice Laundry', '"The Juice Laundry"', 'Juice Laundry', 
+                  'juice laundry', '"Juice Laundry"')
+time_span <- "2016-10-11 2018-12-31"
 
 # run gtrends to obtain list of data frames
 
@@ -38,10 +38,13 @@ ggplot(gtrend, aes(x = week_of, y = relative_interest,
   geom_line() + 
   labs(title = 'Interest Over Time', x = 'Month', y = 'Relative Interest', 
        color = 'Search Term:') + 
-  scale_x_datetime(date_breaks = 'month', 
-                   date_labels = c('Jan', month.abb[1:12])) +
+  scale_x_datetime(date_breaks = '3 months', date_labels = c('Dec 2016', 'Dec 2016', 'Mar 2017', 'Jun 2017', 'Sep 2017', 'Dec 2017', 'Mar 2018', 'June 2018', 'Sep 2018', 'Dec 2018')) +
+  geom_smooth(se = FALSE) +
   theme(legend.position = 'bottom', legend.direction = 'vertical') +
   guides(color = guide_legend(nrow = 2))
+
+## Notice that the juice laundry line does not show
+## because it is the same line as Juice Laundry
 
 # Summarize the average interest and round to avoid a bunch of decimals
 
