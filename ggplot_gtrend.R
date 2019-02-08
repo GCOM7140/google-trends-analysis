@@ -1,5 +1,6 @@
-# The objective is to compile a tidy data set using gtrendsR
-# With multiple search terms chosen
+# The objective is to replicate the two main visuals 
+# that Google Trends supplies: the line and bar graph
+# with multiple TJL search term variations provided
 
 # Required Packages
 
@@ -29,16 +30,44 @@ gtrend <- gtrends_list[["interest_over_time"]] %>%
          'search_term' = 'keyword') %>% 
   select(c('week_of', 'search_term', 'relative_interest'))
 
-# Replicate google trend visual
+# Replicate a neat google trend visual
+# Ignore abnormal date_label -- for some unknown reason, axis started with Feb.
 
 ggplot(gtrend, aes(x = week_of, y = relative_interest, 
                    color = search_term)) + 
   geom_line() + 
-  geom_smooth(se = FALSE) +
   labs(title = 'Interest Over Time', x = 'Month', y = 'Relative Interest', 
-       color = 'Search Term') +
-  theme(legend.position = 'top', legend.direction = "horizontal", 
-        legend.box = "horizontal")
+       color = 'Search Term:') + 
+  scale_x_datetime(date_breaks = 'month', 
+                   date_labels = c('Jan', month.abb[1:12])) +
+  theme(legend.position = 'bottom', legend.direction = 'vertical') +
+  guides(color = guide_legend(nrow = 2))
+
+# Summarize the average interest and round to avoid a bunch of decimals
+
+avg_trend <- gtrend %>% 
+  group_by(search_term) %>% 
+  summarise(round(mean(relative_interest))) %>% 
+  rename('avg_interest' = 'round(mean(relative_interest))')
+
+# Plot bar graph with stat = 'identity' to avoid a count (allowing y variable)
+# Use geom_text to label interest over bars
+# Notice that titles should state a conclusion
+
+ggplot(avg_trend, aes(x = search_term, y = avg_interest)) + 
+  geom_bar(stat = 'identity', fill = c('red', 'blue', 'green', 'purple')) +
+  geom_text(aes(label = avg_interest, vjust = -1)) +
+  labs(title = 'The search term, juice laundry, recieved the greatest average interest in 2018', x = 'Search Term', y = 'Average Interest') +
+  ylim(0, 100)
+
+## Now you have the two main visuals that Google Trends gives you
+
+
+
+
+
+
+
 
 
        
