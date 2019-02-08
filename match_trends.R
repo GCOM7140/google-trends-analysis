@@ -7,7 +7,7 @@ library(tidyverse)
 library(gtrendsR)
 
 # Specify google trend csv file path, search term(s), and time period
-# you must download multiTimeline-24.csv found in the data folder
+# You must download google-trends.csv found in the data folder
 
 csv <- "YOUR_FILE/PATH"
 search_term <- '"juice laundry"'
