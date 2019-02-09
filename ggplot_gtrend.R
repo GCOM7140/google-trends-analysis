@@ -22,6 +22,12 @@ time_span <- "2016-10-11 2018-12-31"
 gtrends_list <- gtrends(keyword = search_terms, geo = "US", time = time_span,
                         gprop = "web")
 
+# NOTE - gtrends was run at 3 pm on 2019-02-09
+# Write CSV to record this sample of data
+
+write_csv(gtrends_list[["interest_over_time"]], 
+          path = "2019-02-09-ggplot-gtrend.csv")
+
 # Create tidy table
 
 gtrend <- gtrends_list[["interest_over_time"]] %>% 
@@ -31,8 +37,6 @@ gtrend <- gtrends_list[["interest_over_time"]] %>%
   select(c('week_of', 'search_term', 'relative_interest'))
 
 # Replicate a neat google trend line graph
-# Ignore abnormal date_label -- for some unknown reason, you need the
-# first month twice
 # I added a smooth line to summarize trends
 
 ggplot(gtrend, aes(x = week_of, y = relative_interest, 
@@ -40,9 +44,9 @@ ggplot(gtrend, aes(x = week_of, y = relative_interest,
   geom_line() + 
   labs(title = 'Interest Over Time', x = 'Month', y = 'Relative Interest', 
        color = 'Search Term:') + 
-  scale_x_datetime(date_breaks = '3 months', date_labels = c('Dec 2016', 'Dec 2016', 'Mar 2017', 'Jun 2017', 'Sep 2017', 'Dec 2017', 'Mar 2018', 'June 2018', 'Sep 2018', 'Dec 2018')) +
-  geom_smooth(se = FALSE) +
-  theme(legend.position = 'bottom', legend.direction = 'vertical') +
+  scale_x_datetime(date_labels = "%m/%Y", date_breaks = "2 months") +
+  theme(legend.position = 'bottom', legend.direction = 'vertical', 
+        axis.text.x = element_text(angle = 45, hjust = 1)) +
   guides(color = guide_legend(nrow = 2))
 
 ## Notice that the juice laundry line does not show
@@ -73,7 +77,6 @@ ggplot(avg_trend, aes(x = search_term, y = avg_interest)) +
 
 ## Now you have the two main visuals that Google Trends gives you
 
-# NOTE - gtrends was run at 3 pm on 02-09-2019
 
 
 
