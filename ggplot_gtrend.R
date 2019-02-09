@@ -7,7 +7,7 @@
 library(tidyverse)
 library(gtrendsR)
 
-# Specify search terms and date (2018) 
+# Specify search terms and date (timeline of tjl 'Square' data) 
 # Notice that quoting terms makes a difference
 # Ex. The Juice Laundry vs. "The Juice Laundry"
 # But capitalization would not make a difference
@@ -17,7 +17,7 @@ search_terms <- c('The Juice Laundry', '"The Juice Laundry"', 'Juice Laundry',
                   'juice laundry', '"Juice Laundry"')
 time_span <- "2016-10-11 2018-12-31"
 
-# run gtrends to obtain list of data frames
+# run gtrends to obtain list of data frames -- takes a while
 
 gtrends_list <- gtrends(keyword = search_terms, geo = "US", time = time_span,
                         gprop = "web")
@@ -30,8 +30,10 @@ gtrend <- gtrends_list[["interest_over_time"]] %>%
          'search_term' = 'keyword') %>% 
   select(c('week_of', 'search_term', 'relative_interest'))
 
-# Replicate a neat google trend visual
-# Ignore abnormal date_label -- for some unknown reason, axis started with Feb.
+# Replicate a neat google trend line graph
+# Ignore abnormal date_label -- for some unknown reason, you need the
+# first month twice
+# I added a smooth line to summarize trends
 
 ggplot(gtrend, aes(x = week_of, y = relative_interest, 
                    color = search_term)) + 
@@ -58,16 +60,20 @@ avg_trend <- gtrend %>%
 # Notice that titles should state a conclusion
 
 ggplot(avg_trend, aes(x = search_term, y = avg_interest)) + 
-  geom_bar(stat = 'identity', fill = c('red', 'blue', 'green', 'purple')) +
+  geom_bar(stat = 'identity', 
+           fill = c('red', 'blue', 'green', 'purple', 'yellow')) +
   geom_text(aes(label = avg_interest, vjust = -1)) +
-  labs(title = 'The search term, juice laundry, recieved the greatest average interest in 2018', x = 'Search Term', y = 'Average Interest') +
+  labs(title = 'The search term, juice laundry (Juice Laundry), recieved the
+       greatest average interest from Oct. 2016 through 2018', 
+       x = 'Search Term', 
+       y = 'Average Interest') +
   ylim(0, 100)
+
+## Again, notice juice laundry and Juice Laundry averages are equal
 
 ## Now you have the two main visuals that Google Trends gives you
 
-
-
-
+# NOTE - gtrends was run at 3 pm on 02-09-2019
 
 
 
