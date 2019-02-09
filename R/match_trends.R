@@ -18,8 +18,7 @@ time_span <- "2018-01-01 2018-12-31"
 # Specify column type so that it matches gtrends
 
 google_trend <- read_csv(
-  csv, skip = 3, col_names = c('week_of', 'relative_interest'),
-  col_types = cols('relative_interest' = col_integer())
+  csv, skip = 3, col_names = c('week_of', 'relative_interest')
   ) %>% 
   as_tibble() %>% 
   mutate('search_term' = search_term) %>% 
