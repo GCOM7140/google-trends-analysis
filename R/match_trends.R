@@ -24,7 +24,7 @@ google_trend <- read_csv(
   mutate('search_term' = search_term) %>% 
   select(c('week_of', 'search_term', 'relative_interest'))
 
-# Run gtrends to obtain list of data frames
+# Run gtrends to obtain list of data frames (at 5 PM, 2019-02-09)
 
 gtrends_list <- gtrends(
   search_term,  geo = "US", time = time_span
