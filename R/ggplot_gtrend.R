@@ -6,29 +6,34 @@
 
 library(tidyverse)
 library(gtrendsR)
+library(gridExtra)
 
 # Specify search terms and date (timeline of tjl 'Square' data) 
+# Download 2019-02-10-ggplot-gtrend.csv from data folder
+# if you wish to use the csv I used (but replace with your local path)
 # Notice that quoting terms makes a difference
 # Ex. The Juice Laundry vs. "The Juice Laundry"
 # But capitalization would not make a difference
 # Ex. the juice laundry vs. The Juice Laundry
 
-search_terms <- c('The Juice Laundry', '"The Juice Laundry"', 'Juice Laundry', 
+search_terms <- c('The Juice Laundry', '"The Juice Laundry"', 'Juice Laundry',
                   'juice laundry', '"Juice Laundry"')
 time_span <- "2016-10-11 2018-12-31"
+csv <- "/Users/malcolm_mashig/Box Sync/google-trends-analysis/data/2019-02-10-ggplot-gtrend.csv"
 
-# run gtrends to obtain list of data frames -- takes a while
+# If you are NOT using my csv, run gtrends to obtain list of data frames
+# It takes a while
 
 gtrends_list <- gtrends(keyword = search_terms, geo = "US", time = time_span,
                         gprop = "web")
 
-# NOTE - gtrends was run at 3 pm on 2019-02-09
-# Write CSV to record this sample of data
+# NOTE - csv is from gtrends that was run at 4 pm on 2019-02-10
+# Write csv to record your sample of data (different after time)
 
 write_csv(gtrends_list[["interest_over_time"]], 
-          path = "2019-02-09-ggplot-gtrend.csv")
+          path = "2019-02-10-ggplot-gtrend.csv")
 
-# Create tidy table
+# If using your own csv, create tidy table
 
 gtrend <- gtrends_list[["interest_over_time"]] %>% 
   as_tibble() %>% 
@@ -36,14 +41,26 @@ gtrend <- gtrends_list[["interest_over_time"]] %>%
          'search_term' = 'keyword') %>% 
   select(c('week_of', 'search_term', 'relative_interest'))
 
-# Replicate a neat google trend line graph
-# I added a smooth line to summarize trends
+# Or, if you are using my csv, read it in as tidy table
 
-ggplot(gtrend, aes(x = week_of, y = relative_interest, 
+gtrend <- read_csv(csv) %>% 
+  as_tibble() %>% 
+  rename('relative_interest' = 'hits', 'week_of' = 'date', 
+         'search_term' = 'keyword') %>% 
+  select(c('week_of', 'search_term', 'relative_interest'))
+
+# Replicate a neat google trend line graph
+# Notice that titles should state a conclusion
+
+line_graph <- ggplot(gtrend, aes(x = week_of, 
+                   y = relative_interest, 
                    color = search_term)) + 
   geom_line() + 
-  labs(title = 'Interest Over Time', x = 'Month', y = 'Relative Interest', 
-       color = 'Search Term:') + 
+  labs(title = 'The search term, Juice Laundry (juice laundry), consistently 
+       recieved most interest from Oct 2016 thru 2018', 
+       x = 'Month', 
+       y = 'Relative Interest', 
+       color = 'Search Term') + 
   scale_x_datetime(date_labels = "%m/%Y", date_breaks = "2 months") +
   theme(legend.position = 'bottom', legend.direction = 'vertical', 
         axis.text.x = element_text(angle = 45, hjust = 1)) +
@@ -61,21 +78,30 @@ avg_trend <- gtrend %>%
 
 # Plot bar graph with stat = 'identity' to avoid a count (allowing y variable)
 # Use geom_text to label interest over bars
-# Notice that titles should state a conclusion
 
-ggplot(avg_trend, aes(x = search_term, y = avg_interest)) + 
+bar_graph <- ggplot(avg_trend, aes(x = search_term, y = avg_interest)) + 
   geom_bar(stat = 'identity', 
-           fill = c('red', 'blue', 'green', 'purple', 'yellow')) +
+           fill = c('red', 'olivedrab3', 'aquamarine3', 'deepskyblue', 
+                    'orchid3')) +
   geom_text(aes(label = avg_interest, vjust = -1)) +
-  labs(title = 'The search term, juice laundry (Juice Laundry), recieved the
-       greatest average interest from Oct. 2016 through 2018', 
+  labs(title = "Avg Interest, '16 - '18", 
        x = 'Search Term', 
        y = 'Average Interest') +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
   ylim(0, 100)
 
 ## Again, notice juice laundry and Juice Laundry averages are equal
 
 ## Now you have the two main visuals that Google Trends gives you
+## stored as objects
+
+# Arrange them side by side
+
+grid.arrange(bar_graph, line_graph, ncol = 2, widths = c(2, 5))
+
+
+
+
 
 
 
