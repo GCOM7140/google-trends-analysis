@@ -2,11 +2,22 @@
 # that Google Trends supplies: the line and bar graph
 # with multiple TJL search term variations provided
 
-# Required Packages
+# Load required packages --------------------------------------------------
 
 library(tidyverse)
 library(gtrendsR)
 library(gridExtra)
+library(ggtech)
+library(extrafont)
+
+# Download and import fonts for google graphs later
+
+download.file(
+  "http://social-fonts.com/assets/fonts/product-sans/product-sans.ttf", 
+  "/Library/Fonts/product-sans.ttf", 
+  method="curl"
+  )
+font_import(pattern = 'product-sans.ttf', prompt=FALSE)
 
 # Specify search terms and date (timeline of tjl 'Square' data) 
 # Download 2019-02-10-ggplot-gtrend.csv from data folder
@@ -17,7 +28,7 @@ library(gridExtra)
 # Ex. the juice laundry vs. The Juice Laundry
 
 search_terms <- c('The Juice Laundry', '"The Juice Laundry"', 'Juice Laundry',
-                  'juice laundry', '"Juice Laundry"')
+                  '"Juice Laundry"')
 time_span <- "2016-10-11 2018-12-31"
 csv <- "/Users/malcolm_mashig/Box Sync/google-trends-analysis/data/2019-02-10-ggplot-gtrend.csv"
 
@@ -27,7 +38,7 @@ csv <- "/Users/malcolm_mashig/Box Sync/google-trends-analysis/data/2019-02-10-gg
 gtrends_list <- gtrends(keyword = search_terms, geo = "US", time = time_span,
                         gprop = "web")
 
-# NOTE - csv is from gtrends that was run at 4 pm on 2019-02-10
+# NOTE - csv is from gtrends that was run at 11:57 pm on 2019-02-10
 # Write csv to record your sample of data (different after time)
 
 write_csv(gtrends_list[["interest_over_time"]], 
@@ -56,8 +67,10 @@ line_graph <- ggplot(gtrend, aes(x = week_of,
                    y = relative_interest, 
                    color = search_term)) + 
   geom_line() + 
-  labs(title = 'The search term, Juice Laundry (juice laundry), consistently 
-       recieved most interest from Oct 2016 thru 2018', 
+  theme_tech(theme = 'google') +
+  scale_color_tech(theme = 'google') +
+  labs(subtitle = 'The search term, Juice Laundry, consistently 
+       recieved greatest interest from Oct 2016 thru 2018', 
        x = 'Month', 
        y = 'Relative Interest', 
        color = 'Search Term') + 
@@ -78,13 +91,15 @@ avg_trend <- gtrend %>%
 
 # Plot bar graph with stat = 'identity' to avoid a count (allowing y variable)
 # Use geom_text to label interest over bars
+# Entered manual colors from ggtech theme page
 
 bar_graph <- ggplot(avg_trend, aes(x = search_term, y = avg_interest)) + 
-  geom_bar(stat = 'identity', 
-           fill = c('red', 'olivedrab3', 'aquamarine3', 'deepskyblue', 
-                    'orchid3')) +
+  geom_bar(stat = 'identity', fill = c("#5380E4", "#E12A3C", 
+                                       "#FFBF03", "#00B723")) +
   geom_text(aes(label = avg_interest, vjust = -1)) +
-  labs(title = "Avg Interest, '16 - '18", 
+  theme_tech(theme = 'google') +
+  scale_fill_tech(theme = 'google') +
+  labs(subtitle = "Avg Relative Interest", 
        x = 'Search Term', 
        y = 'Average Interest') +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
@@ -99,6 +114,9 @@ bar_graph <- ggplot(avg_trend, aes(x = search_term, y = avg_interest)) +
 
 grid.arrange(bar_graph, line_graph, ncol = 2, widths = c(2, 5))
 
+## If you get an error like 'polygon edge not found', restart R 
+## and try again
+## If that does not work, update your ggplot2 pkg as well
 
 
 
