@@ -17,6 +17,8 @@ search_terms <- c("/g/12m9gwg0k", "The Juice Laundry", '"The Juice Laundry"',
 gtrends_list <- gtrends(keyword = search_terms, 
                         geo = "US", time = "2016-10-08 2018-12-31")
 
+write_csv(gtrends_list[["interest_over_time"]], "2019-02-17-tjl-sample.csv")
+
 # rename /g/12m9gwg0k value to TJL Topic
 
 x <- gtrends_list[["interest_over_time"]]
