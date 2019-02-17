@@ -23,6 +23,8 @@ x <- gtrends_list[["interest_over_time"]]
 
 x[x$keyword == "/g/12m9gwg0k", "keyword"] <- "TJL Topic"
 
+# Spread so that we can test correlation
+
 y <- x %>% spread(key = "keyword", value = "hits")
 
 cor(y[,9], y[, 8])
@@ -33,7 +35,7 @@ cor(y[,9], y[, 6])
 
 cor(y[,9], y[, 5])
 
-cor(y[,9], y[, 4]) # Highest Correlation is Juice Laundry
+cor(y[,9], y[, 4]) # Highest Correlation is "Juice Laundry"
 
 ggplot(x, aes(date, hits, color = keyword)) + geom_line()
 
