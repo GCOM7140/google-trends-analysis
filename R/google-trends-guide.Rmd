@@ -1,0 +1,27 @@
+---
+title: "The Google Trends R Guide"
+author: "Analyzing *Google* search interest over time with the `gtrendsR` package"
+output:
+  github_document:
+    toc: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### Data Cleaning {.tabset}
+
+### Case Insensitive Check {.tabset}
+
+### TJL Search Terms Comparision {.tabset}
+
+### Sampling {.tabset}
+
+### `thejuicelaundry` dataset {.tabset}
+
+### Corner Juice Search Terms Comparision {.tabset}
+
+### Corner Juice vs. TJL {.tabset}
+
+
