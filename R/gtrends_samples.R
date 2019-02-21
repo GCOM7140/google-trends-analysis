@@ -35,5 +35,21 @@ gtrends_cj_list <- gtrends(keyword = cj_terms,
 
 write_csv(gtrends_cj_list[["interest_over_time"]], 
           "2019-02-21-gtrendsR-cj-sample.csv")
-  
+
+# set wd
+setwd("~/Box Sync/google-trends-analysis/data")
+
+X1 <- read_csv("2019-02-17-tjl-sample.csv") %>% select(hits)
+X2 <- read_csv("2019-02-18-tjl-sample.csv") %>% select(hits)
+X3 <- read_csv("2019-02-19-tjl-sample.csv") %>% select(hits)
+X4 <- read_csv("2019-02-20-tjl-sample.csv") %>% select(hits)
+X5 <- read_csv("2019-02-21-tjl-sample.csv") %>% select(hits)
+
+gtrends.list <- list(X1, X2, X3, X4, X5)
+
+gtrends_averaged <- Reduce('+', gtrends.list) / length(gtrends.list)
+
+X1 <- read_csv("2019-02-17-tjl-sample.csv")
+frame <- X1 %>% select(date, keyword)
+sample_average <- bind_cols(frame, gtrends_averaged)
 
