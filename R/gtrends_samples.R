@@ -49,7 +49,6 @@ gtrends.list <- list(X1, X2, X3, X4, X5)
 
 gtrends_averaged <- Reduce('+', gtrends.list) / length(gtrends.list)
 
-X1 <- read_csv("2019-02-17-tjl-sample.csv")
-frame <- X1 %>% select(date, keyword)
+frame <- read_csv("2019-02-17-tjl-sample.csv") %>% select(date, keyword)
 sample_average <- bind_cols(frame, gtrends_averaged)
 
