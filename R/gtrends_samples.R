@@ -19,9 +19,9 @@ cj_terms <- c("Corner Juice", '"Corner Juice"')
 gtrends_list <- gtrends(keyword = search_terms, 
                         geo = "US", time = "2016-10-08 2018-12-31")
 
-write_csv(gtrends_list[["interest_over_time"]], "2019-02-18-tjl-sample.csv")
+write_csv(gtrends_list[["interest_over_time"]], "2019-02-21-tjl-sample.csv")
 
-x <- read_csv("2019-02-18-tjl-sample.csv") %>% 
+x <- read_csv("2019-02-20-tjl-sample.csv") %>% 
   as_tibble()
 
 # rename /g/12m9gwg0k value to TJL Topic
@@ -34,6 +34,6 @@ gtrends_cj_list <- gtrends(keyword = cj_terms,
                            geo = "US", time = "2016-10-08 2018-12-31")
 
 write_csv(gtrends_cj_list[["interest_over_time"]], 
-          "2019-02-18-gtrendsR-cj-sample.csv")
+          "2019-02-21-gtrendsR-cj-sample.csv")
   
 
