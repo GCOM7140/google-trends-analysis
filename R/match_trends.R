@@ -26,6 +26,8 @@ time_span <- "2018-01-01 2018-12-31"
 # If you want to run your own test with a new csv (not the one provided),
 # you must specify column type so that it matches gtrends
 
+o <- read_csv(csv, skip = 2)
+
 google_trend <- read_csv(
   csv, skip = 3, 
   col_names = c('week_of', 'relative_interest')
@@ -44,7 +46,7 @@ gtrends_list <- gtrends(
 # Optional -- write a csv, if you are not using the one provided, to save 
 # gtrendsR data you use (remember, its a different sample each time)
 
-write_csv(gtrends_list[["interest_over_time"]], "2019-02-09-google-trends-gtrendsr.csv")
+write_csv(gtrends_list[["interest_over_time"]], paste0(Sys.Date(), "-google-trends-gtrendsr.csv"))
 
 # If you are running your own test with new csv file, convert gtrends 
 # interest_over_time into data table that matches google trend

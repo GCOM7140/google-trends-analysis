@@ -27,8 +27,8 @@ font_import(pattern = 'product-sans.ttf', prompt=FALSE)
 # But capitalization would not make a difference
 # Ex. the juice laundry vs. The Juice Laundry
 
-search_terms <- c('The Juice Laundry', '"The Juice Laundry"', 'Juice Laundry',
-                  '"Juice Laundry"')
+search_terms <- c('the juice laundry', '"the juice laundry"', 'juice laundry',
+                  '"juice laundry"')
 time_span <- "2016-10-11 2018-12-31"
 csv <- "/Users/malcolm_mashig/Box Sync/google-trends-analysis/data/2019-02-10-ggplot-gtrend.csv"
 
