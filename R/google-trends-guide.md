@@ -81,7 +81,7 @@ You have added what is known as a *topic*. According to Google, **a topic is a g
 
 Your screen should look very similar to the photo below. Because samples are different every day, however, the trendlines will not look exactly the same.
 
-![](/Users/malcolm_mashig/Box%20Sync/google-trends-analysis/output/tjl-gtrends-ui.png)
+![](https://github.com/GCOM7140/google-trends-analysis/blob/master/output/tjl-gtrends-ui.png)
 
 Scroll your mouse over the trendlines and witness how **relative search interest is aggregated for week intervals**. Look for the peak popularity of the trends and note the specific week they occurred. Do a quick google search for news around that time -- did TJL open a new location or have a story written on them? Is there an obvious reason that relative search interest for them was highest then?
 
