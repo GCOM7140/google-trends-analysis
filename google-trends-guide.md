@@ -137,7 +137,7 @@ Notice how `gtrendsR` data is tidy without any extra work on our part. Change th
 ``` r
 gtrends <- gtrends_list[["interest_over_time"]] %>% 
   as_tibble() %>% 
-  rename('relative_interest' = 'hits', 
+  rename('relativecsv_interest' = 'hits', 
          'week_of' = 'date', 
          'search_term' = 'keyword') %>% 
   select(c('week_of', 'search_term', 'relative_interest'))
@@ -154,7 +154,7 @@ View(gtrends)
 Read in the csv you downloaded from the UI. Swap my local path with your local path.
 
 ``` r
-csv <- "/Users/malcolm_mashig/Downloads/multiTimeline-37.csv"
+csv <- "YOUR/LOCAL/CSV-FILE-PATH.csv"
 raw_google_trends <- read_csv(csv, skip = 2)
 
 View(raw_google_trends)
