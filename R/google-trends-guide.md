@@ -154,7 +154,7 @@ View(gtrends)
 Read in the csv you downloaded from the UI. Swap my local path with your local path.
 
 ``` r
-csv <- "/Users/malcolm_mashig/Downloads/multiTimeline-36.csv"
+csv <- "/Users/malcolm_mashig/Downloads/multiTimeline-37.csv"
 raw_google_trends <- read_csv(csv, skip = 2)
 
 View(raw_google_trends)
@@ -194,6 +194,10 @@ setequal(google_trends, gtrends)
 ```
 
     ## [1] TRUE
+
+**NOTE:** If you do not get TRUE, download a new csv from the UI and rerun everything with the new file.
+
+------------------------------------------------------------------------
 
 ### Replicating the *Google Trends* visuals
 
