@@ -190,7 +190,7 @@ google_trends[google_trends$search_term == 'The Juice Laundry: (United States)',
 View(google_trends)
 ```
 
-They two datasets may appear identical but we must make sure they are.
+Now you have two sets of tidy data with the same parameters and same variables: one directly from the UI, the other generated with the `gtrendsR` package. Are they the same? In other words, is the R package reliable? The two datasets may appear identical but we must make sure they are.
 
 ``` r
 setequal(google_trends, gtrends)
