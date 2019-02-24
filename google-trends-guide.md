@@ -72,7 +72,7 @@ If you do not already have it open, go to <a href="https://trends.google.com/tre
 
 You will notice that only the red line shows. This is because the **search terms are case insensitive** and the trendlines are identical. Now, replace the second search term with "the juice laundry" (in quotes this time).
 
-You will notice that the trendlines are different and that is because sourrounding the term in quotes creates a totally different query based on *Google's* algorithm. Navigate <a href="https://support.google.com/trends/answer/4359582?hl=en" target="blank">here</a> to see the results of queries that are different but that share similar terms. The takeaway is that **the algorithm is stricter on quoted terms** (because it only counts searches with that exact phrase) and the trendlines should reflect this ("the juice laundry" being generally lower then its non-quoted counterpart).
+You will notice that the trendlines are different and that is because sourrounding the term in quotes creates a different query based on *Google's* algorithm. Navigate <a href="https://support.google.com/trends/answer/4359582?hl=en" target="blank">here</a> to see the results of queries that are different but that share similar terms. The takeaway is that **the algorithm is stricter on quoted terms** (because it only counts searches with that exact phrase) and the trendlines should reflect this ("the juice laundry" being generally lower then its non-quoted counterpart).
 
 Add 'juice laundry' and the quoted "juice laundry", in that order, as two more search terms.
 
