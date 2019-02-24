@@ -36,7 +36,7 @@ According to the *Google Trends Help* page...
 
 -   Only a percentage of searches are used to compile Trends data.
 
--   Samples are refreshed every day and so data from one day with differ slightly from data (with the same parameters) from another.
+-   Samples are refreshed every day and so data from one day will differ slightly from data (with the same parameters) from another.
 
 Search results are proportionate to the time and location of a search (commonly referred to as a query) by the following process:
 
