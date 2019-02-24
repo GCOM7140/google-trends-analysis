@@ -140,7 +140,7 @@ Notice how `gtrendsR` data is tidy without any extra work on our part. Change th
 ``` r
 gtrends <- gtrends_list[["interest_over_time"]] %>% 
   as_tibble() %>% 
-  rename('relativecsv_interest' = 'hits', 
+  rename('relative_interest' = 'hits', 
          'week_of' = 'date', 
          'search_term' = 'keyword') %>% 
   select(c('week_of', 'search_term', 'relative_interest'))
