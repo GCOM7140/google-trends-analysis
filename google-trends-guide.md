@@ -76,7 +76,7 @@ You will notice that the trendlines are different and that is because sourroundi
 
 Add 'juice laundry' and the quoted "juice laundry", in that order, as two more search terms.
 
-The resulting trendlines will be unique, displaying generally greater search interest than search terms with "the" (an additional restriction) in them -- which makes sense. Take note of how the interest over time for existing trendlines (the blue and red in this case) shrink as you added the new search terms. Remember that this is because **search interest for one term is relative to the search interest for another**.
+The resulting trendlines will be unique, displaying generally greater search interest than search terms with "the" (an additional restriction) in them -- which makes sense. Take note of how the interest over time for existing trendlines (the blue and red in this case) shrinked after you added the new search terms. Remember that this is because **search interest for one term is relative to the search interest for another**.
 
 Finally, add *The Juice Laundry* as another search term, but this time choose the option that states "Juice Shop in Charlottesville, VA" underneath it.
 
