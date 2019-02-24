@@ -96,7 +96,7 @@ You will notice that each term has its own column. However, the search terms are
 -   Each observation must have its own row.
 -   Each value must have its own cell.
 
-That said, the variable should be "search term", and each term (one for each observation) should fall under that column.
+That said, the variable should be "search term", and each term (one for each observation) should fall under that column. You will see this when you tidy the UI's raw data later in this guide.
 
 Now that you are familiar with the UI and all of the nuances with search terms and topics, you are ready to repeat the process and expand on that process within R.
 
