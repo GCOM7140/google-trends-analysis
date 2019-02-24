@@ -154,7 +154,7 @@ gtrends[gtrends$search_term == gsub("q=", "",
 View(gtrends)
 ```
 
-Read in the csv you downloaded from the UI. Swap my local path with your local path.
+Read in the csv you downloaded from the UI. Swap in your local path.
 
 ``` r
 csv <- "YOUR/LOCAL/CSV-FILE-PATH.csv"
