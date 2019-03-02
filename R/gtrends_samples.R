@@ -19,7 +19,9 @@ cj_terms <- c("Corner Juice", '"Corner Juice"')
 gtrends_list <- gtrends(keyword = search_terms, 
                         geo = "US", time = "2016-10-08 2018-12-31")
 
-write_csv(gtrends_list[["interest_over_time"]], paste0(Sys.Date(), "-tjl-sample.csv"))
+write_csv(gtrends_list[["interest_over_time"]], 
+          paste0(Sys.Date(), "-tjl-sample.csv")) %>% 
+  file.path(sample, path = "~/box-sync/google-trends-analysis/data/samples")
 
 x <- read_csv("2019-02-20-tjl-sample.csv") %>% 
   as_tibble()
@@ -34,7 +36,8 @@ gtrends_cj_list <- gtrends(keyword = cj_terms,
                            geo = "US", time = "2016-10-08 2018-12-31")
 
 write_csv(gtrends_cj_list[["interest_over_time"]], 
-          paste0(Sys.Date(), "-gtrendsR-cj-sample.csv"))
+          paste0(Sys.Date(), "-gtrendsR-cj-sample.csv")) %>% 
+  file.path(sample, path = "~/box-sync/google-trends-analysis/data/samples")
 
 # set wd
 setwd("~/Box Sync/google-trends-analysis/data")
