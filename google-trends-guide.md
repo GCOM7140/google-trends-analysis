@@ -2,6 +2,8 @@ The Google Trends R Guide
 ================
 A manual for *intelligent*, *reproducible*, and *programmatic* analysis of *Google Trends* search interest over time with the `gtrendsR` package
 
+------------------------------------------------------------------------
+
 ### Table of Contents
 -   [Overview](#overview)
 -   [Understanding *Google Trends*](#understanding-google-trends)
@@ -34,7 +36,7 @@ According to the *Google Trends Help* page...
 
 -   Only a percentage of searches are used to compile Trends data.
 
--   Samples are refreshed every day and so data from one day with differ slightly from data (with the same parameters) from another.
+-   Samples are refreshed every day and so data from one day will differ slightly from data (with the same parameters) from another.
 
 Search results are proportionate to the time and location of a search (commonly referred to as a query) by the following process:
 
@@ -70,11 +72,11 @@ If you do not already have it open, go to <a href="https://trends.google.com/tre
 
 You will notice that only the red line shows. This is because the **search terms are case insensitive** and the trendlines are identical. Now, replace the second search term with "the juice laundry" (in quotes this time).
 
-You will notice that the trendlines are different and that is because sourrounding the term in quotes creates a totally different query based on *Google's* algorithm. Navigate <a href="https://support.google.com/trends/answer/4359582?hl=en" target="blank">here</a> to see the results of queries that are different but that share similar terms. The takeaway is that **the algorithm is stricter on quoted terms** (because it only counts searches with that exact phrase) and the trendlines should reflect this ("the juice laundry" being generally lower then its non-quoted counterpart).
+You will notice that the trendlines are different and that is because sourrounding the term in quotes creates a different query based on *Google's* algorithm. Navigate <a href="https://support.google.com/trends/answer/4359582?hl=en" target="blank">here</a> to see the results of queries that are different but that share similar terms. The takeaway is that **the algorithm is stricter on quoted terms** (because it only counts searches with that exact phrase) and the trendlines should reflect this ("the juice laundry" being generally lower then its non-quoted counterpart).
 
 Add 'juice laundry' and the quoted "juice laundry", in that order, as two more search terms.
 
-The resulting trendlines will be unique, displaying generally greater search interest than search terms with "the" (an additional restriction) in them -- which makes sense. Take note of how the interest over time for existing trendlines (the blue and red in this case) shrink as you added the new search terms. Remember that this is because **search interest for one term is relative to the search interest for another**.
+The resulting trendlines will be unique, displaying generally greater search interest than search terms with "the" (an additional restriction) in them -- which makes sense. Take note of how the interest over time for existing trendlines (the blue and red in this case) shrinked after you added the new search terms. Remember that this is because **search interest for one term is relative to the search interest for another**.
 
 Finally, add *The Juice Laundry* as another search term, but this time choose the option that states "Juice Shop in Charlottesville, VA" underneath it.
 
@@ -94,7 +96,7 @@ You will notice that each term has its own column. However, the search terms are
 -   Each observation must have its own row.
 -   Each value must have its own cell.
 
-That said, the variable should be "search term", and each term (one for each observation) should fall under that column.
+That said, the variable should be "search term", and each term (one for each observation) should fall under that column. You will see this when you tidy the UI's raw data later in this guide.
 
 Now that you are familiar with the UI and all of the nuances with search terms and topics, you are ready to repeat the process and expand on that process within R.
 
@@ -138,7 +140,7 @@ Notice how `gtrendsR` data is tidy without any extra work on our part. Change th
 ``` r
 gtrends <- gtrends_list[["interest_over_time"]] %>% 
   as_tibble() %>% 
-  rename('relativecsv_interest' = 'hits', 
+  rename('relative_interest' = 'hits', 
          'week_of' = 'date', 
          'search_term' = 'keyword') %>% 
   select(c('week_of', 'search_term', 'relative_interest'))
@@ -152,7 +154,7 @@ gtrends[gtrends$search_term == gsub("q=", "",
 View(gtrends)
 ```
 
-Read in the csv you downloaded from the UI. Swap my local path with your local path.
+Read in the csv you downloaded from the UI. Swap in your local path.
 
 ``` r
 csv <- "YOUR/LOCAL/CSV-FILE-PATH.csv"
@@ -188,7 +190,7 @@ google_trends[google_trends$search_term == 'The Juice Laundry: (United States)',
 View(google_trends)
 ```
 
-They two datasets may appear identical but we must make sure they are.
+Now you have two sets of tidy data with the same parameters and same variables: one directly from the UI, the other generated with the `gtrendsR` package. Are they the same? In other words, is the R package reliable? The two datasets may appear identical but we must make sure they are.
 
 ``` r
 setequal(google_trends, gtrends)
