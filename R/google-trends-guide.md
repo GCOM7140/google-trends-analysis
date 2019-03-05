@@ -2,6 +2,9 @@ The Google Trends R Guide
 ================
 A manual for *intelligent*, *reproducible*, and *programmatic* analysis of *Google Trends* search interest over time with the `gtrendsR` package
 
+------------------------------------------------------------------------
+
+### Table of Contents
 -   [Overview](#overview)
 -   [Understanding *Google Trends*](#understanding-google-trends)
 -   [Navigating the User Interface (UI)](#navigating-the-user-interface-ui)
@@ -89,7 +92,7 @@ You have added what is known as a *topic*. According to Google, **a topic is a g
 
 Your screen should look very similar to the photo below. Because samples are different every day, however, the trendlines will not look exactly the same.
 
-![](/Users/malcolm_mashig/box-sync/google-trends-analysis/output/tjl-gtrends-ui.png)
+![](https://github.com/GCOM7140/google-trends-analysis/blob/master/output/tjl-gtrends-ui.png)
 
 *Step 6:* Scroll your mouse over the trendlines and witness how **relative search interest is aggregated for week intervals**.
 
@@ -375,7 +378,7 @@ bar_graph <- bg +
 bar_graph
 ```
 
-![](google-trends-guide_files/figure-markdown_github/unnamed-chunk-13-1.png)
+![](https://github.com/GCOM7140/google-trends-analysis/blob/master/R/google-trends-guide_files/figure-markdown_github/unnamed-chunk-13-1.png)
 
 Now we can arrange both graphs side by side as they appear in the UI. It did require some guessing-and-checking in order to decide the scaling that was best.
 
@@ -387,7 +390,7 @@ grid.arrange(bar_graph, line_graph, ncol = 2, widths = c(2, 5))
 
 Here is the sample UI again for comparision.
 
-![](/Users/malcolm_mashig/box-sync/google-trends-analysis/output/tjl-gtrends-ui.png)
+![](https://github.com/GCOM7140/google-trends-analysis/blob/master/output/tjl-gtrends-ui.png)
 
 ------------------------------------------------------------------------
 
