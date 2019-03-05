@@ -92,7 +92,7 @@ You have added what is known as a *topic*. According to Google, **a topic is a g
 
 Your screen should look very similar to the photo below. Because samples are different every day, however, the trendlines will not look exactly the same.
 
-![](/Users/malcolm_mashig/box-sync/google-trends-analysis/output/tjl-gtrends-ui.png)
+![](google-trends-analysis/output/tjl-gtrends-ui.png)
 
 *Step 6:* Scroll your mouse over the trendlines and witness how **relative search interest is aggregated for week intervals**.
 
@@ -378,7 +378,7 @@ bar_graph <- bg +
 bar_graph
 ```
 
-![](google-trends-guide_files/figure-markdown_github/unnamed-chunk-13-1.png)
+![](google-trends-analysis/output/tjl-gtrends-ui.png)
 
 Now we can arrange both graphs side by side as they appear in the UI. It did require some guessing-and-checking in order to decide the scaling that was best.
 
