@@ -28,7 +28,7 @@ font_import(pattern = 'product-sans.ttf', prompt=FALSE)
 # Ex. the juice laundry vs. The Juice Laundry
 
 search_terms <- c('the juice laundry', '"the juice laundry"', 'juice laundry',
-                  '"juice laundry"')
+                  '"juice laundry"', 'TJL')
 time_span <- "2016-10-11 2018-12-31"
 csv <- "/Users/malcolm_mashig/Box Sync/google-trends-analysis/data/2019-02-10-ggplot-gtrend.csv"
 
@@ -63,11 +63,24 @@ gtrend <- read_csv(csv) %>%
 # Replicate a neat google trend line graph
 # Notice that titles should state a conclusion
 
-line_graph <- ggplot(gtrend, aes(x = week_of, 
+scale_color_tech <- function(theme="airbnb", tech_key = list(
+  airbnb = c("#FF5A5F", "#FFB400", "#007A87",  "#FFAA91", "#7B0051"),
+  facebook = c("#3b5998", "#6d84b4", "#afbdd4", "#d8dfea"),
+  google = c("#5380E4", "#E12A3C", "#FFBF03", "#00B723", "#8440a3"),
+  etsy = c("#F14000", "#67B6C3", "#F0DA47", "#EBEBE6", "#D0D0CB"),
+  twitter = c("#55ACEE", "#292f33", "#8899a6", "#e1e8ed"),
+  X23andme = c("#3595D6","#92C746","#F2C100","#FF6D19", "#6F3598")
+)) {
+  
+  scale_color_manual(values=tech_key[[theme]])
+  
+}
+
+ggplot(gtrend, aes(x = week_of, 
                    y = relative_interest, 
                    color = search_term)) + 
-  geom_line() + 
-  theme_tech(theme = 'google') +
+  geom_line() +
+  theme_tech(theme = 'google') + 
   scale_color_tech(theme = 'google') +
   labs(subtitle = 'The search term, Juice Laundry, consistently 
        recieved greatest interest from Oct 2016 thru 2018', 
@@ -78,6 +91,13 @@ line_graph <- ggplot(gtrend, aes(x = week_of,
   theme(legend.position = 'bottom', legend.direction = 'vertical', 
         axis.text.x = element_text(angle = 45, hjust = 1)) +
   guides(color = guide_legend(nrow = 2))
+
+ggplot(gtrend, aes(x = week_of, 
+                   y = relative_interest, 
+                   color = search_term)) + geom_line() + labs(x = 'Month', 
+       y = 'Relative Interest', 
+       color = 'Search Term')
+
 
 ## Notice that the juice laundry line does not show
 ## because it is the same line as Juice Laundry
