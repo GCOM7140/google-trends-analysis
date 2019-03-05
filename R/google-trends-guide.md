@@ -92,7 +92,7 @@ You have added what is known as a *topic*. According to Google, **a topic is a g
 
 Your screen should look very similar to the photo below. Because samples are different every day, however, the trendlines will not look exactly the same.
 
-![](google-trends-analysis/output/tjl-gtrends-ui.png)
+![](https://github.com/GCOM7140/google-trends-analysis/blob/master/output/tjl-gtrends-ui.png)
 
 *Step 6:* Scroll your mouse over the trendlines and witness how **relative search interest is aggregated for week intervals**.
 
@@ -390,7 +390,7 @@ grid.arrange(bar_graph, line_graph, ncol = 2, widths = c(2, 5))
 
 Here is the sample UI again for comparision.
 
-![](google-trends-analysis/output/tjl-gtrends-ui.png)
+![](https://github.com/GCOM7140/google-trends-analysis/blob/master/output/tjl-gtrends-ui.png)
 
 ------------------------------------------------------------------------
 
