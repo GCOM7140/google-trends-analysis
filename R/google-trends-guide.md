@@ -378,7 +378,7 @@ bar_graph <- bg +
 bar_graph
 ```
 
-![](google-trends-analysis/output/tjl-gtrends-ui.png)
+![](https://github.com/GCOM7140/google-trends-analysis/blob/master/R/google-trends-guide_files/figure-markdown_github/unnamed-chunk-13-1.png)
 
 Now we can arrange both graphs side by side as they appear in the UI. It did require some guessing-and-checking in order to decide the scaling that was best.
 
