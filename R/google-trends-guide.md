@@ -164,14 +164,14 @@ gtrends
     ## # A tibble: 585 x 3
     ##    week_of    search_term       relative_interest
     ##    <date>     <chr>                         <dbl>
-    ##  1 2016-10-09 the juice laundry                22
-    ##  2 2016-10-16 the juice laundry                11
-    ##  3 2016-10-23 the juice laundry                16
-    ##  4 2016-10-30 the juice laundry                22
-    ##  5 2016-11-06 the juice laundry                15
+    ##  1 2016-10-09 the juice laundry                 0
+    ##  2 2016-10-16 the juice laundry                 0
+    ##  3 2016-10-23 the juice laundry                22
+    ##  4 2016-10-30 the juice laundry                 0
+    ##  5 2016-11-06 the juice laundry                20
     ##  6 2016-11-13 the juice laundry                11
-    ##  7 2016-11-20 the juice laundry                11
-    ##  8 2016-11-27 the juice laundry                10
+    ##  7 2016-11-20 the juice laundry                 0
+    ##  8 2016-11-27 the juice laundry                 0
     ##  9 2016-12-04 the juice laundry                 0
     ## 10 2016-12-11 the juice laundry                10
     ## # … with 575 more rows
@@ -341,18 +341,18 @@ avg_trend
     ## # A tibble: 5 x 2
     ##   search_term             avg_interest
     ##   <chr>                          <dbl>
-    ## 1 "\"juice laundry\""               29
-    ## 2 "\"the juice laundry\""            9
-    ## 3 juice laundry                     47
-    ## 4 the juice laundry                 15
-    ## 5 TJL Topic                         25
+    ## 1 "\"juice laundry\""               25
+    ## 2 "\"the juice laundry\""            5
+    ## 3 juice laundry                     44
+    ## 4 the juice laundry                 10
+    ## 5 TJL Topic                         24
 
 Construct a draft for the bar graph. Remember that bar graphs with y variables specified must clarify that `stat = 'identity'`.
 
 ``` r
 bg <- ggplot(avg_trend, aes(x = search_term, y = avg_interest)) + 
   geom_bar(stat = 'identity') +
-  labs(x = NULL, y = 'Average Interest')
+  labs(x = 'Search Term', y = 'Average Interest')
 
 bg
 ```
