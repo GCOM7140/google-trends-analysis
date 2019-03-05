@@ -390,7 +390,7 @@ grid.arrange(bar_graph, line_graph, ncol = 2, widths = c(2, 5))
 
 Here is the sample UI again for comparision.
 
-![](/Users/malcolm_mashig/box-sync/google-trends-analysis/output/tjl-gtrends-ui.png)
+![](google-trends-analysis/output/tjl-gtrends-ui.png)
 
 ------------------------------------------------------------------------
 
