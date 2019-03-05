@@ -253,7 +253,7 @@ The two datasets may appear identical but we must make sure they are.
 setequal(google_trends, gtrends)
 ```
 
-    ## [1] FALSE
+    ## [1] TRUE
 
 **NOTE:** If you do not get TRUE, download a new csv from the UI and rerun everything with the new file.
 
