@@ -1,5 +1,7 @@
 # Everything runs fine most of the time
 # But occasionally I will get the "polygon edge not found" error message
+# and I have to quit and re-open RStudio for it to work again
+# Error first comes up when I run "line_graph"
 
 library(gtrendsR)
 library(tidyverse)
