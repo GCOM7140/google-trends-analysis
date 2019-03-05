@@ -4,7 +4,6 @@ remove.packages('gtrendsR')
 devtools::install_github("PMassicotte/gtrendsR")
 library(gtrendsR)
 library(tidyverse)
-library(here)
 
 # Decode q parameter in URL (before comma)
 

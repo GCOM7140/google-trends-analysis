@@ -6,7 +6,7 @@ output:
     toc: true
 ---
 
-```{r setup, include=FALSE}
+```{r Setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
 ```
 
@@ -66,23 +66,23 @@ Along the lines of what this guide will show you, *Google Trends* is most practi
 
 If you do not already have it open, go to <a href="https://trends.google.com/trends/?geo=US" target="blank">Google Trends</a>. 
 
-*Step 1:* Enter 'the juice laundry' as your search term. Then change 'Past 12 Months' to a custom time range from October 9, 2016 (10-9-2016) to the end of 2018 (12-31-2018). These dates coincide with the time period of the `thejuicelaundry` package's *Square* transaction data. 
+<u>*Step 1:*</u> Enter 'the juice laundry' as your search term. Then change 'Past 12 Months' to a custom time range from October 9, 2016 (10-9-2016) to the end of 2018 (12-31-2018). These dates coincide with the time period of the `thejuicelaundry` package's *Square* transaction data. 
 
 Notice that you can also change the location, category, and search type (web, image, etc.) parameters, but leave them alone. 
 
-*Step 2:* Enter 'The Juice Laundry' (capitalized this time) as a second search term. 
+<u>*Step 2:*</u> Enter 'The Juice Laundry' (capitalized this time) as a second search term. 
 
 Both terms should say 'search term' under them. You will notice that only the red line shows. This is because the **search terms are case insensitive** and the  trendlines are identical. 
 
-*Step 3:* Replace the second search term with "the juice laundry" (in quotes this time).
+<u>*Step 3:*</u> Replace the second search term with "the juice laundry" (in quotes this time).
 
 You will notice that the trendlines are different and that is because sourrounding the term in quotes creates a totally different query based on *Google's* algorithm. Navigate <a href="https://support.google.com/trends/answer/4359582?hl=en" target="blank">here</a> to see the results of queries that are different but that share similar terms. The takeaway is that **the algorithm is stricter on quoted terms** (because it only counts searches with that exact phrase) and the trendlines should reflect this ("the juice laundry" being generally lower then its non-quoted counterpart).
 
-*Step 4:* Add 'juice laundry' and the quoted "juice laundry", in that order, as two more search terms. 
+<u>*Step 4:*</u> Add 'juice laundry' and the quoted "juice laundry", in that order, as two more search terms. 
 
 The resulting trendlines will be unique, displaying generally greater search interest than search terms with "the" (an additional restriction) in them -- which makes sense. Take note of how the interest over time for existing trendlines (the blue and red in this case) shrink as you added the new search terms. Remember that this is because **search interest for one term is relative to the search interest for another**. 
 
-*Step 5:* Finally, add *The Juice L aundry* as another search term, but this time choose the option that states "Juice Shop in Charlottesville, VA" underneath it.
+<u>*Step 5:*</u> Finally, add *The Juice L aundry* as another search term, but this time choose the option that states "Juice Shop in Charlottesville, VA" underneath it.
 
 You have added what is known as a *topic*. According to Google, **a topic is a group of terms that share a concept**. For example, if you search the topic "London," your search includes results for topics such as "Capital of the UK" and "Londres" which is "London" in Spanish. For all we know, Google's algorithm may be grouping search terms like those we have (more or less) to form the topic of *The Juice Laundry*, but we cannot know for sure what it is doing.
 
@@ -90,11 +90,11 @@ Your screen should look very similar to the photo below. Because samples are dif
 
 ![](/Users/malcolm_mashig/box-sync/google-trends-analysis/output/tjl-gtrends-ui.png)
 
-*Step 6:* Scroll your mouse over the trendlines and witness how **relative search interest is aggregated for week intervals**. 
+<u>*Step 6:*</u> Scroll your mouse over the trendlines and witness how **relative search interest is aggregated for week intervals**. 
 
 Look for the peak popularity of the trends and note the specific week they occurred. Do a quick google search for news around that time -- did TJL open a new location or have a story written on them? Is there an obvious reason that relative search interest for them was highest then?
 
-*Step 7:*  Download the displayed data as a csv file and open it with Excel or Numbers (using the download button on the top right of the line graph). 
+<u>*Step 7:*</u>  Download the displayed data as a csv file and open it with Excel or Numbers (using the download button on the top right of the line graph). 
 
 You will notice that each term has its own column. However, the search terms are values, not variables, and so the dataset as you see it is **not tidy**. To quote <a href = "https://r4ds.had.co.nz/tidy-data.html#tidy-data-1" target = "blank">R4DS</a>, there are three interrelated rules which make a dataset tidy:
 
@@ -115,7 +115,7 @@ Our first objective is to ensure that data pulled from gtrendsR is tidy and matc
 
 Open RStudio and install/load the required packages.
 
-```{r}
+```{r Load}
 devtools::install_github("PMassicotte/gtrendsR")
 library(gtrendsR)
 library(tidyverse)
@@ -123,7 +123,7 @@ library(tidyverse)
 
 Assign the time period and search terms we used in the UI. The topic (represented in the URL as a code) must be decoded.
 
-```{r}
+```{r Parameters}
 time_span <- "2016-10-09 2018-12-31"
 topic_url <- "q=%2Fg%2F12m9gwg0k"
 search_terms <- c("the juice laundry", 
@@ -135,7 +135,7 @@ search_terms <- c("the juice laundry",
 
 Run gtrendsR and I recommend saving the interest_over_time dataframe (the only one we are concerned with) as a csv file with today's date.
 
-```{r}
+```{r gtrendsR}
 gtrends_list <- gtrends(search_terms, geo = "US", time = time_span)
 
 write_csv(gtrends_list[["interest_over_time"]], 
@@ -144,7 +144,7 @@ write_csv(gtrends_list[["interest_over_time"]],
 
 Notice how `gtrendsR` data is tidy without any extra work on our part. Change the column names and types so that they make more sense and rename the topic code.
 
-```{r}
+```{r Clean gtrendsR}
 gtrends <- gtrends_list[["interest_over_time"]] %>% 
   as_tibble() %>% 
   rename('relative_interest' = 'hits', 
@@ -163,7 +163,7 @@ gtrends
 
 Read in the csv you downloaded from the UI. Swap my local path with your local path.
 
-```{r}
+```{r Google Trends}
 csv <- "/Users/malcolm_mashig/Downloads/multiTimeline-37.csv"
 raw_google_trends <- read_csv(csv, skip = 2)
 
@@ -172,7 +172,7 @@ raw_google_trends
 
 The data from the UI is not tidy. Tidy it. Reading in from the UI, as you can see, becomes tedious.
 
-```{r}
+```{r Clean Google Trends}
 google_trends <- raw_google_trends %>% 
   as_tibble() %>% 
   gather('the juice laundry: (United States)', 
@@ -199,7 +199,7 @@ google_trends
 
 The two datasets may appear identical but we must make sure they are.
 
-```{r}
+```{r Set equal}
 setequal(google_trends, gtrends)
 ```
 
@@ -213,7 +213,7 @@ The next objective is to replicate the UI's line graph and bar graph within the 
 
 Download/load the tools we will need for the graphs we want. Utilizing `ggplot` and the `ggtech` add-on package (found <a href="https://github.com/ricardo-bion/ggtech" target="blank">here</a>) will allow us to make visuals that look nearly identical to those that Google Trends displays for us.
 
-```{r}
+```{r Load ggtech}
 library(gridExtra)
 library(ggtech)
 library(extrafont)
@@ -226,13 +226,13 @@ download.file(
 font_import(pattern = 'product-sans.ttf', prompt=FALSE)
 ```
 
-**NOTE:** If you ever get an error like *"polygon edge not found"* in the following steps, save what you have, restart RStudio, and run it again.
+**NOTE:** If you ever get an error like *"polygon edge not found"* in the following steps, save what you have, quit and re-open RStudio, and run it again.
 
-*Line Graph:*
+<u>*Line Graph:*</u>
 
 Remember that titles should state conclusions that can be made based on the graph. Make sure that the title I supplied is true and make sure it is a subtitle (a title will be too large later on).
 
-```{r}
+```{r Basic Line Graph}
 lg <- ggplot(
   gtrends, aes(x = week_of, y = relative_interest, color = search_term)
   ) + 
@@ -247,7 +247,7 @@ lg
 
 It still looks far different than the UI. The solution is the `ggtech` package. There is a problem, however, because the package only specifies four google colors while our line graph contains five different search terms with their unique lines. If you look back at the UI, the fifth color is a shade of purple. If you take a screenshot isolating the purple line and then upload it <a href="https://html-color-codes.info/colors-from-image/" target="blank">here</a>, the program will spit out the exact color code. I got *#8F39AA* and you should get something similar. Now we need to update one of the package's function (found <a href="https://github.com/ricardo-bion/ggtech/blob/master/R/scale_color_tech.R" target="blank">here</a>) to add the fifth color to the google theme. Then we can use `ggtech` to create the ideal line graph.
 
-```{r}
+```{r Google Line Graph}
 scale_color_tech <- function(theme="airbnb", tech_key = list(
   airbnb = c("#FF5A5F", "#FFB400", "#007A87",  "#FFAA91", "#7B0051"),
   facebook = c("#3b5998", "#6d84b4", "#afbdd4", "#d8dfea"),
@@ -262,7 +262,7 @@ scale_color_tech <- function(theme="airbnb", tech_key = list(
   
 }
 
-line_graph <- lg + 
+line_graph <- lg +
   theme_tech(theme = 'google') + 
   scale_color_tech(theme = 'google') +
   guides(color = guide_legend(nrow = 2)) +
@@ -275,11 +275,11 @@ line_graph
   
 ```
 
-*Bar Graph:*
+<u>*Bar Graph:*</u>
 
 First, summarize the average `relative_interest` for each search term and round to avoid decimals. The `group_by` and `summarise` functions will almost always be used together.
 
-```{r}
+```{r Average Interest}
 avg_trend <- gtrends %>% 
   group_by(search_term) %>% 
   summarise('avg_interest' = round(mean(relative_interest)))
@@ -289,7 +289,7 @@ avg_trend
 
 Construct a draft for the bar graph. Remember that bar graphs with y variables specified must clarify that `stat = 'identity'`.
 
-```{r}
+```{r Basic Bar Graph}
 bg <- ggplot(avg_trend, aes(x = search_term, y = avg_interest)) + 
   geom_bar(stat = 'identity') +
   labs(x = 'Search Term', y = 'Average Interest')
@@ -299,7 +299,7 @@ bg
 
 To add the fifth color this time, we will save all of Google's color codes (above) in a list and use the fill argument to deploy them. 
 
-```{r}
+```{r Google Bar Graph}
 google_colors <- c("#5380E4", "#E12A3C", "#FFBF03", "#00B723", "#8F39AA")
 
 bar_graph <- bg +
@@ -313,21 +313,87 @@ bar_graph <- bg +
 bar_graph
 ```
 
+<u>*Replicating the UI*</u>
+
 Now we can arrange both graphs side by side as they appear in the UI. It did require some guessing-and-checking in order to decide the scaling that was best.
 
-```{r}
+```{r UI Replication}
 grid.arrange(bar_graph, line_graph, ncol = 2, widths = c(2, 5))
+
 ```
 
-Here is the sample UI again for comparision.
+Here is the example UI again for comparision:
 
 ![](/Users/malcolm_mashig/box-sync/google-trends-analysis/output/tjl-gtrends-ui.png)
 
 ***
 
+### *TJL* Search Terms Analysis
+
+One of the main purposes of Google Trends is to benchmark relative search interest against relative search interest throughout the past. That said, the next objective is to decide which of the TJL search terms is most appropriate to follow and use as the standard. We could simply resort to the Topic search and trust that the Google algorithm knows best, but since not all entities have a Topic as defined by Google (*Corner Juice* for example), it might be intuitive to find the search term that draws a relative interest most similar to that of the Topic. That way, we can observe what features of a search are best when the entity we search for has no Topic. For instance, do the most accurate search terms contain all words in the entity's official name or only the vital ones? Are the terms most accurate when surrounded in quotes? Etcetera.
+
+Before we start to compare the TJL search terms and their similarity to the *TJL* Topic, we must ensure that the data is reliable by taking many samples. Here, you will begin to see the advantage of using R and `gtrendsR` to analyze Google Trends data.
+
+<u>Sampling for Reliability</u>
+
+Since 24 hours must pass before a new sample with new data is generated, I will provide thirteen samples (with the same parameters as above). All samples were collected as csv files after I ran `gtrendsR` on thirteen seperate days during the end of February and beginning of March 2019. 
+
+First, read the samples in with only the relative interest (hits) that we are concerned with. You can find all of the samples below in [this folder]("https://github.com/GCOM7140/google-trends-analysis/tree/master/data/samples").
+
+```{r Read samples in}
+X1 <- read_csv("/Users/malcolm_mashig/box-sync/google-trends-analysis/data/samples/2019-02-18-tjl-sample.csv") %>% select(hits)
+X2 <- read_csv("/Users/malcolm_mashig/box-sync/google-trends-analysis/data/samples/2019-02-19-tjl-sample.csv") %>% select(hits)
+X3 <- read_csv("/Users/malcolm_mashig/box-sync/google-trends-analysis/data/samples/2019-02-20-tjl-sample.csv") %>% select(hits)
+X4 <- read_csv("/Users/malcolm_mashig/box-sync/google-trends-analysis/data/samples/2019-02-21-tjl-sample.csv") %>% select(hits)
+X5 <- read_csv("/Users/malcolm_mashig/box-sync/google-trends-analysis/data/samples/2019-02-22-tjl-sample.csv") %>% select(hits)
+X6 <- read_csv("/Users/malcolm_mashig/box-sync/google-trends-analysis/data/samples/2019-02-23-tjl-sample.csv") %>% select(hits)
+X7 <- read_csv("/Users/malcolm_mashig/box-sync/google-trends-analysis/data/samples/2019-02-24-tjl-sample.csv") %>% select(hits)
+X8 <- read_csv("/Users/malcolm_mashig/box-sync/google-trends-analysis/data/samples/2019-02-25-tjl-sample.csv") %>% select(hits)
+X9 <- read_csv("/Users/malcolm_mashig/box-sync/google-trends-analysis/data/samples/2019-02-26-tjl-sample.csv") %>% select(hits)
+X10 <- read_csv("/Users/malcolm_mashig/box-sync/google-trends-analysis/data/samples/2019-02-27-tjl-sample.csv") %>% select(hits)
+X11 <- read_csv("/Users/malcolm_mashig/box-sync/google-trends-analysis/data/samples/2019-03-01-tjl-sample.csv") %>% select(hits)
+X12 <- read_csv("/Users/malcolm_mashig/box-sync/google-trends-analysis/data/samples/2019-03-02-tjl-sample.csv") %>% select(hits)
+X13 <- read_csv("/Users/malcolm_mashig/box-sync/google-trends-analysis/data/samples/2019-03-03-tjl-sample.csv") %>% select(hits)
+```
+
+Based on the method found [here]("https://github.com/PMassicotte/gtrendsR/issues/269#issuecomment-392784579"), the following code will average the relative interests (hits) for each week and search term among all samples.
+
+```{r Average hits}
+gtrends.list <- list(X1, X2, X3, X4, X5, X6, X7, X8, X9, X10, X11, X12, X13)
+gtrends_averaged <- Reduce('+', gtrends.list) / length(gtrends.list)
+
+gtrends_averaged %>% as_tibble()
+```
+
+All we need to do now is reattach the average interests to their respective weeks and search terms (using the frame taken from one of the samples) and then clean it up a bit as we have done earlier in the guide.
+
+```{r Average relative interest among all samples}
+frame <- read_csv("/Users/malcolm_mashig/box-sync/google-trends-analysis/data/samples/2019-02-18-tjl-sample.csv") %>% 
+  select("week_of" = date, "search_term" = keyword)
+
+sample_average <- bind_cols(frame, gtrends_averaged) %>% 
+  as_tibble() %>% 
+  rename("average_relative_interest" = hits)
+
+sample_average$week_of <- as.Date(sample_average$week_of) 
+# Rather than datetime default
+gtrends[sample_average$search_term == gsub("q=", "", 
+                                    URLdecode(topic_url)), 
+        "search_term"] <- "TJL Topic"
+
+sample_average
+
+```
+
+<u>*Comparision via Correlation*:</u>
+
+While one of the search terms may ("juice laundry" in my case) look like the obvious
+
 ### `thejuicelaundry` dataset {.tabset}
 
 ### Corner Juice Search Terms Comparision {.tabset}
+
+
 
 ### Corner Juice vs. TJL {.tabset}
 
