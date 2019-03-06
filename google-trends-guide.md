@@ -2,9 +2,6 @@ The Google Trends R Guide
 ================
 A manual for *intelligent*, *reproducible*, and *programmatic* analysis of *Google Trends* search interest over time with the `gtrendsR` package
 
-------------------------------------------------------------------------
-
-### Table of Contents
 -   [Overview](#overview)
 -   [Understanding *Google Trends*](#understanding-google-trends)
 -   [Navigating the User Interface (UI)](#navigating-the-user-interface-ui)
@@ -93,7 +90,7 @@ You have added what is known as a *topic*. According to Google, **a topic is a g
 
 Your screen should look very similar to the photo below. Because samples are different every day, however, the trendlines will not look exactly the same.
 
-![](https://github.com/GCOM7140/google-trends-analysis/blob/master/output/tjl-gtrends-ui.png)
+![](/Users/malcolm_mashig/box-sync/google-trends-analysis/output/tjl-gtrends-ui.png)
 
 <u>*Step 6:*</u> Scroll your mouse over the trendlines and witness how **relative search interest is aggregated for week intervals**.
 
@@ -167,16 +164,16 @@ gtrends
     ## # A tibble: 585 x 3
     ##    week_of    search_term       relative_interest
     ##    <date>     <chr>                         <dbl>
-    ##  1 2016-10-09 the juice laundry                17
+    ##  1 2016-10-09 the juice laundry                10
     ##  2 2016-10-16 the juice laundry                 0
-    ##  3 2016-10-23 the juice laundry                11
-    ##  4 2016-10-30 the juice laundry                11
+    ##  3 2016-10-23 the juice laundry                10
+    ##  4 2016-10-30 the juice laundry                 0
     ##  5 2016-11-06 the juice laundry                10
     ##  6 2016-11-13 the juice laundry                 0
-    ##  7 2016-11-20 the juice laundry                11
+    ##  7 2016-11-20 the juice laundry                 0
     ##  8 2016-11-27 the juice laundry                 0
     ##  9 2016-12-04 the juice laundry                 0
-    ## 10 2016-12-11 the juice laundry                10
+    ## 10 2016-12-11 the juice laundry                 0
     ## # … with 575 more rows
 
 Read in the csv you downloaded from the UI. Swap my local path with your local path.
@@ -252,7 +249,7 @@ The two datasets may appear identical but we must make sure they are.
 setequal(google_trends, gtrends)
 ```
 
-    ## [1] TRUE
+    ## [1] FALSE
 
 **NOTE:** If you do not get TRUE, download a new csv from the UI and rerun everything with the new file.
 
@@ -345,11 +342,11 @@ avg_trend
     ## # A tibble: 5 x 2
     ##   search_term             avg_interest
     ##   <chr>                          <dbl>
-    ## 1 "\"juice laundry\""               28
-    ## 2 "\"the juice laundry\""            9
-    ## 3 juice laundry                     47
-    ## 4 the juice laundry                 15
-    ## 5 TJL Topic                         27
+    ## 1 "\"juice laundry\""               23
+    ## 2 "\"the juice laundry\""            5
+    ## 3 juice laundry                     41
+    ## 4 the juice laundry                 11
+    ## 5 TJL Topic                         23
 
 Construct a draft for the bar graph. Remember that bar graphs with y variables specified must clarify that `stat = 'identity'`.
 
@@ -393,7 +390,7 @@ grid.arrange(bar_graph, line_graph, ncol = 2, widths = c(2, 5))
 
 Here is the example UI again for comparision:
 
-![](https://github.com/GCOM7140/google-trends-analysis/blob/master/output/tjl-gtrends-ui.png)
+![](/Users/malcolm_mashig/box-sync/google-trends-analysis/output/tjl-gtrends-ui.png)
 
 ------------------------------------------------------------------------
 
@@ -410,19 +407,22 @@ Since 24 hours must pass before a new sample with new data is generated, I will 
 First, read the samples in with only the relative interest (hits) that we are concerned with. You can find all of the samples below in [this folder](%22https://github.com/GCOM7140/google-trends-analysis/tree/master/data/samples%22).
 
 ``` r
-X1 <- read_csv("/Users/malcolm_mashig/box-sync/google-trends-analysis/data/samples/2019-02-18-tjl-sample.csv") %>% select(hits)
-X2 <- read_csv("/Users/malcolm_mashig/box-sync/google-trends-analysis/data/samples/2019-02-19-tjl-sample.csv") %>% select(hits)
-X3 <- read_csv("/Users/malcolm_mashig/box-sync/google-trends-analysis/data/samples/2019-02-20-tjl-sample.csv") %>% select(hits)
-X4 <- read_csv("/Users/malcolm_mashig/box-sync/google-trends-analysis/data/samples/2019-02-21-tjl-sample.csv") %>% select(hits)
-X5 <- read_csv("/Users/malcolm_mashig/box-sync/google-trends-analysis/data/samples/2019-02-22-tjl-sample.csv") %>% select(hits)
-X6 <- read_csv("/Users/malcolm_mashig/box-sync/google-trends-analysis/data/samples/2019-02-23-tjl-sample.csv") %>% select(hits)
-X7 <- read_csv("/Users/malcolm_mashig/box-sync/google-trends-analysis/data/samples/2019-02-24-tjl-sample.csv") %>% select(hits)
-X8 <- read_csv("/Users/malcolm_mashig/box-sync/google-trends-analysis/data/samples/2019-02-25-tjl-sample.csv") %>% select(hits)
-X9 <- read_csv("/Users/malcolm_mashig/box-sync/google-trends-analysis/data/samples/2019-02-26-tjl-sample.csv") %>% select(hits)
-X10 <- read_csv("/Users/malcolm_mashig/box-sync/google-trends-analysis/data/samples/2019-02-27-tjl-sample.csv") %>% select(hits)
-X11 <- read_csv("/Users/malcolm_mashig/box-sync/google-trends-analysis/data/samples/2019-03-01-tjl-sample.csv") %>% select(hits)
-X12 <- read_csv("/Users/malcolm_mashig/box-sync/google-trends-analysis/data/samples/2019-03-02-tjl-sample.csv") %>% select(hits)
-X13 <- read_csv("/Users/malcolm_mashig/box-sync/google-trends-analysis/data/samples/2019-03-03-tjl-sample.csv") %>% select(hits)
+raw <- "https://raw.githubusercontent.com/MalcolmMashig/google-trends/master/tjl/2019-"
+tjl <- "-tjl-sample.csv"
+
+X1 <- read_csv(paste0(raw, "02-18", tjl)) %>% select(hits)
+X2 <- read_csv(paste0(raw, "02-19", tjl)) %>% select(hits)
+X3 <- read_csv(paste0(raw, "02-20", tjl)) %>% select(hits)
+X4 <- read_csv(paste0(raw, "02-21", tjl)) %>% select(hits)
+X5 <- read_csv(paste0(raw, "02-22", tjl)) %>% select(hits)
+X6 <- read_csv(paste0(raw, "02-23", tjl)) %>% select(hits)
+X7 <- read_csv(paste0(raw, "02-24", tjl)) %>% select(hits)
+X8 <- read_csv(paste0(raw, "02-25", tjl)) %>% select(hits)
+X9 <- read_csv(paste0(raw, "02-26", tjl)) %>% select(hits)
+X10 <- read_csv(paste0(raw, "02-27", tjl)) %>% select(hits)
+X11 <- read_csv(paste0(raw, "03-01", tjl)) %>% select(hits)
+X12 <- read_csv(paste0(raw, "03-02", tjl)) %>% select(hits)
+X13 <- read_csv(paste0(raw, "03-03", tjl)) %>% select(hits)
 ```
 
 Based on the method found [here](%22https://github.com/PMassicotte/gtrendsR/issues/269#issuecomment-392784579%22), the following code will average the relative interests (hits) for each week and search term among all samples.
@@ -452,7 +452,7 @@ gtrends_averaged %>% as_tibble()
 All we need to do now is reattach the average interests to their respective weeks and search terms (using the frame taken from one of the samples) and then clean it up a bit as we have done earlier in the guide.
 
 ``` r
-frame <- read_csv("/Users/malcolm_mashig/box-sync/google-trends-analysis/data/samples/2019-02-18-tjl-sample.csv") %>% 
+frame <- read_csv(paste0(raw, "02-18", tjl)) %>% 
   select("week_of" = date, "search_term" = keyword)
 
 sample_average <- bind_cols(frame, gtrends_averaged) %>% 
