@@ -1,0 +1,1 @@
+gtrends_url <- function(search_terms, start_date, end_date)

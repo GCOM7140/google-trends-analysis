@@ -68,35 +68,35 @@ Along the lines of what this guide will show you, *Google Trends* is most practi
 
 If you do not already have it open, go to <a href="https://trends.google.com/trends/?geo=US" target="blank">Google Trends</a>.
 
-<u>*Step 1:*</u> Enter 'the juice laundry' as your search term. Then change 'Past 12 Months' to a custom time range from October 9, 2016 (10-9-2016) to the end of 2018 (12-31-2018). These dates coincide with the time period of the `thejuicelaundry` package's *Square* transaction data.
+**<u>*Step 1:*</u>** Enter 'the juice laundry' as your search term. Then change 'Past 12 Months' to a custom time range from October 9, 2016 (10-9-2016) to the end of 2018 (12-31-2018). These dates coincide with the time period of the `thejuicelaundry` package's *Square* transaction data.
 
 Notice that you can also change the location, category, and search type (web, image, etc.) parameters, but leave them alone.
 
-<u>*Step 2:*</u> Enter 'The Juice Laundry' (capitalized this time) as a second search term.
+**<u>*Step 2:*</u>** Enter 'The Juice Laundry' (capitalized this time) as a second search term.
 
 Both terms should say 'search term' under them. You will notice that only the red line shows. This is because the **search terms are case insensitive** and the trendlines are identical.
 
-<u>*Step 3:*</u> Replace the second search term with "the juice laundry" (in quotes this time).
+**<u>*Step 3:*</u>** Replace the second search term with "the juice laundry" (in quotes this time).
 
 You will notice that the trendlines are different and that is because sourrounding the term in quotes creates a totally different query based on *Google's* algorithm. Navigate <a href="https://support.google.com/trends/answer/4359582?hl=en" target="blank">here</a> to see the results of queries that are different but that share similar terms. The takeaway is that **the algorithm is stricter on quoted terms** (because it only counts searches with that exact phrase) and the trendlines should reflect this ("the juice laundry" being generally lower then its non-quoted counterpart).
 
-<u>*Step 4:*</u> Add 'juice laundry' and the quoted "juice laundry", in that order, as two more search terms.
+**<u>*Step 4:*</u>** Add 'juice laundry' and the quoted "juice laundry", in that order, as two more search terms.
 
 The resulting trendlines will be unique, displaying generally greater search interest than search terms with "the" (an additional restriction) in them -- which makes sense. Take note of how the interest over time for existing trendlines (the blue and red in this case) shrink as you added the new search terms. Remember that this is because **search interest for one term is relative to the search interest for another**.
 
-<u>*Step 5:*</u> Finally, add *The Juice L aundry* as another search term, but this time choose the option that states "Juice Shop in Charlottesville, VA" underneath it.
+**<u>*Step 5:*</u>** Finally, add *The Juice L aundry* as another search term, but this time choose the option that states "Juice Shop in Charlottesville, VA" underneath it.
 
 You have added what is known as a *topic*. According to Google, **a topic is a group of terms that share a concept**. For example, if you search the topic "London," your search includes results for topics such as "Capital of the UK" and "Londres" which is "London" in Spanish. For all we know, Google's algorithm may be grouping search terms like those we have (more or less) to form the topic of *The Juice Laundry*, but we cannot know for sure what it is doing.
 
 Your screen should look very similar to the photo below. Because samples are different every day, however, the trendlines will not look exactly the same.
 
-![](/Users/malcolm_mashig/box-sync/google-trends-analysis/output/tjl-gtrends-ui.png)
+![](https://raw.githubusercontent.com/MalcolmMashig/google-trends/master/tjl-gtrends-ui.png)
 
-<u>*Step 6:*</u> Scroll your mouse over the trendlines and witness how **relative search interest is aggregated for week intervals**.
+**<u>*Step 6:*</u>** Scroll your mouse over the trendlines and witness how **relative search interest is aggregated for week intervals**.
 
 Look for the peak popularity of the trends and note the specific week they occurred. Do a quick google search for news around that time -- did TJL open a new location or have a story written on them? Is there an obvious reason that relative search interest for them was highest then?
 
-<u>*Step 7:*</u> Download the displayed data as a csv file and open it with Excel or Numbers (using the download button on the top right of the line graph).
+**<u>*Step 7:*</u>** Download the displayed data as a csv file and open it with Excel or Numbers (using the download button on the top right of the line graph). It should come from <a href="https://trends.google.com/trends/explore?date=2016-10-09%202018-12-31&geo=US&q=the%20juice%20laundry,%22the%20juice%20laundry%22,juice%20laundry,%22juice%20laundry%22,%2Fg%2F12m9gwg0k" target="blank">this exact UI</a>.
 
 You will notice that each term has its own column. However, the search terms are values, not variables, and so the dataset as you see it is **not tidy**. To quote <a href = "https://r4ds.had.co.nz/tidy-data.html#tidy-data-1" target = "blank">R4DS</a>, there are three interrelated rules which make a dataset tidy:
 
@@ -157,49 +157,25 @@ gtrends$relative_interest <- as.double(gtrends$relative_interest) # Not Int
 gtrends[gtrends$search_term == gsub("q=", "", 
                                     URLdecode(topic_url)), 
         "search_term"] <- "TJL Topic"
-
-gtrends
 ```
 
-    ## # A tibble: 585 x 3
-    ##    week_of    search_term       relative_interest
-    ##    <date>     <chr>                         <dbl>
-    ##  1 2016-10-09 the juice laundry                10
-    ##  2 2016-10-16 the juice laundry                 0
-    ##  3 2016-10-23 the juice laundry                10
-    ##  4 2016-10-30 the juice laundry                 0
-    ##  5 2016-11-06 the juice laundry                10
-    ##  6 2016-11-13 the juice laundry                 0
-    ##  7 2016-11-20 the juice laundry                 0
-    ##  8 2016-11-27 the juice laundry                 0
-    ##  9 2016-12-04 the juice laundry                 0
-    ## 10 2016-12-11 the juice laundry                 0
-    ## # … with 575 more rows
+``` r
+gtrends
+```
 
 Read in the csv you downloaded from the UI. Swap my local path with your local path.
 
 ``` r
-csv <- "/Users/malcolm_mashig/Downloads/multiTimeline-37.csv"
-raw_google_trends <- read_csv(csv, skip = 2)
-
-raw_google_trends
+csv <- "YOUR/LOCAL/CSV/PATH"
 ```
 
-    ## # A tibble: 117 x 6
-    ##    Week       `the juice laun… `"the juice lau… `juice laundry:…
-    ##    <date>                <dbl>            <dbl>            <dbl>
-    ##  1 2016-10-09               10                0               10
-    ##  2 2016-10-16                0                0               31
-    ##  3 2016-10-23                0                0               10
-    ##  4 2016-10-30                0                0               39
-    ##  5 2016-11-06                0                0                0
-    ##  6 2016-11-13                0               20               10
-    ##  7 2016-11-20                0                0                0
-    ##  8 2016-11-27                0                0               28
-    ##  9 2016-12-04                0                0              100
-    ## 10 2016-12-11               19                9               38
-    ## # … with 107 more rows, and 2 more variables: `"juice laundry": (United
-    ## #   States)` <dbl>, `The Juice Laundry: (United States)` <dbl>
+``` r
+raw_google_trends <- read_csv(csv, skip = 2)
+```
+
+``` r
+raw_google_trends
+```
 
 The data from the UI is not tidy. Tidy it. Reading in from the UI, as you can see, becomes tedious.
 
@@ -224,32 +200,19 @@ google_trends[google_trends$search_term == 'juice laundry: (United States)', "se
 google_trends[google_trends$search_term == '"juice laundry": (United States)', "search_term"] <- '"juice laundry"'
 
 google_trends[google_trends$search_term == 'The Juice Laundry: (United States)', "search_term"] <- "TJL Topic"
-
-google_trends
 ```
 
-    ## # A tibble: 585 x 3
-    ##    week_of    search_term       relative_interest
-    ##    <date>     <chr>                         <dbl>
-    ##  1 2016-10-09 the juice laundry                10
-    ##  2 2016-10-16 the juice laundry                 0
-    ##  3 2016-10-23 the juice laundry                 0
-    ##  4 2016-10-30 the juice laundry                 0
-    ##  5 2016-11-06 the juice laundry                 0
-    ##  6 2016-11-13 the juice laundry                 0
-    ##  7 2016-11-20 the juice laundry                 0
-    ##  8 2016-11-27 the juice laundry                 0
-    ##  9 2016-12-04 the juice laundry                 0
-    ## 10 2016-12-11 the juice laundry                19
-    ## # … with 575 more rows
+``` r
+google_trends
+```
 
 The two datasets may appear identical but we must make sure they are.
 
 ``` r
 setequal(google_trends, gtrends)
-```
 
-    ## [1] FALSE
+## [1] TRUE
+```
 
 **NOTE:** If you do not get TRUE, download a new csv from the UI and rerun everything with the new file.
 
@@ -277,7 +240,7 @@ font_import(pattern = 'product-sans.ttf', prompt=FALSE)
 
 **NOTE:** If you ever get an error like *"polygon edge not found"* in the following steps, save what you have, quit and re-open RStudio, and run it again.
 
-<u>*Line Graph:*</u>
+**<u>*Line Graph:*</u>**
 
 Remember that titles should state conclusions that can be made based on the graph. Make sure that the title I supplied is true and make sure it is a subtitle (a title will be too large later on).
 
@@ -327,7 +290,7 @@ line_graph
 
 ![](google-trends-guide_files/figure-markdown_github/Google%20Line%20Graph-1.png)
 
-<u>*Bar Graph:*</u>
+**<u>*Bar Graph:*</u>**
 
 First, summarize the average `relative_interest` for each search term and round to avoid decimals. The `group_by` and `summarise` functions will almost always be used together.
 
@@ -342,11 +305,11 @@ avg_trend
     ## # A tibble: 5 x 2
     ##   search_term             avg_interest
     ##   <chr>                          <dbl>
-    ## 1 "\"juice laundry\""               23
-    ## 2 "\"the juice laundry\""            5
-    ## 3 juice laundry                     41
-    ## 4 the juice laundry                 11
-    ## 5 TJL Topic                         23
+    ## 1 "\"juice laundry\""               30
+    ## 2 "\"the juice laundry\""           10
+    ## 3 juice laundry                     50
+    ## 4 the juice laundry                 16
+    ## 5 TJL Topic                         29
 
 Construct a draft for the bar graph. Remember that bar graphs with y variables specified must clarify that `stat = 'identity'`.
 
@@ -378,7 +341,7 @@ bar_graph
 
 ![](google-trends-guide_files/figure-markdown_github/Google%20Bar%20Graph-1.png)
 
-<u>*Replicating the UI*</u>
+**<u>*Replicating the UI*</u>**
 
 Now we can arrange both graphs side by side as they appear in the UI. It did require some guessing-and-checking in order to decide the scaling that was best.
 
@@ -390,7 +353,7 @@ grid.arrange(bar_graph, line_graph, ncol = 2, widths = c(2, 5))
 
 Here is the example UI again for comparision:
 
-![](/Users/malcolm_mashig/box-sync/google-trends-analysis/output/tjl-gtrends-ui.png)
+![](https://raw.githubusercontent.com/MalcolmMashig/google-trends/master/tjl-gtrends-ui.png)
 
 ------------------------------------------------------------------------
 

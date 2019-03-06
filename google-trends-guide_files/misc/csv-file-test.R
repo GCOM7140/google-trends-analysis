@@ -34,6 +34,13 @@ tjl <- "-tjl-sample.csv"
 X1 <- read_csv(paste0(raw, "02-18", tjl)) %>% select(hits)
 X1
 
+ui <- "https://github.com/MalcolmMashig/google-trends/blob/master/tjl-gtrends-ui.png"
 
+download.file(ui)
+
+library(RCurl)
+
+x <- getURLContent("https://github.com/MalcolmMashig/google-trends/blob/master/tjl-gtrends-ui.png")
+x
 
    
