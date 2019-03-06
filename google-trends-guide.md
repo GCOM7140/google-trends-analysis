@@ -114,7 +114,7 @@ Now that you are familiar with the UI and all of the nuances with search terms a
 
 Our first objective is to ensure that data pulled from gtrendsR is tidy and matches the data obtained directly from the UI (on the same day of course).
 
-Open RStudio and install/load the required packages.
+Open RStudio and load the required packages. Make sure you install them first.
 
 ``` r
 devtools::install_github("PMassicotte/gtrendsR")
@@ -139,8 +139,7 @@ Run gtrendsR and I recommend saving the interest\_over\_time dataframe (the only
 ``` r
 gtrends_list <- gtrends(search_terms, geo = "US", time = time_span)
 
-write_csv(gtrends_list[["interest_over_time"]], 
-          paste0(Sys.Date(), "-google-trends-gtrendsr.csv"))
+# write_csv(gtrends_list[["interest_over_time"]], paste0(Sys.Date(), "-google-trends-gtrendsr.csv"))
 ```
 
 Notice how `gtrendsR` data is tidy without any extra work on our part. Change the column names and types so that they make more sense and rename the topic code.
@@ -165,16 +164,16 @@ gtrends
     ## # A tibble: 585 x 3
     ##    week_of    search_term       relative_interest
     ##    <date>     <chr>                         <dbl>
-    ##  1 2016-10-09 the juice laundry                25
-    ##  2 2016-10-16 the juice laundry                12
-    ##  3 2016-10-23 the juice laundry                12
-    ##  4 2016-10-30 the juice laundry                 0
-    ##  5 2016-11-06 the juice laundry                11
-    ##  6 2016-11-13 the juice laundry                24
-    ##  7 2016-11-20 the juice laundry                25
+    ##  1 2016-10-09 the juice laundry                17
+    ##  2 2016-10-16 the juice laundry                 0
+    ##  3 2016-10-23 the juice laundry                11
+    ##  4 2016-10-30 the juice laundry                11
+    ##  5 2016-11-06 the juice laundry                10
+    ##  6 2016-11-13 the juice laundry                 0
+    ##  7 2016-11-20 the juice laundry                11
     ##  8 2016-11-27 the juice laundry                 0
     ##  9 2016-12-04 the juice laundry                 0
-    ## 10 2016-12-11 the juice laundry                11
+    ## 10 2016-12-11 the juice laundry                10
     ## # … with 575 more rows
 
 Read in the csv you downloaded from the UI. Swap my local path with your local path.
@@ -260,9 +259,10 @@ setequal(google_trends, gtrends)
 
 The next objective is to replicate the UI's line graph and bar graph within the RStudio IDE.
 
-Download/load the tools we will need for the graphs we want. Utilizing `ggplot` and the `ggtech` add-on package (found <a href="https://github.com/ricardo-bion/ggtech" target="blank">here</a>) will allow us to make visuals that look nearly identical to those that Google Trends displays for us.
+Install/load the tools we will need for the graphs we want. Utilizing `ggplot` and the `ggtech` add-on package (found <a href="https://github.com/ricardo-bion/ggtech" target="blank">here</a>) will allow us to make visuals that look nearly identical to those that Google Trends displays for us.
 
 ``` r
+# devtools::install_github("ricardo-bion/ggtech", dependencies=TRUE)
 library(gridExtra)
 library(ggtech)
 library(extrafont)
@@ -289,7 +289,7 @@ lg <- ggplot(
   labs(x = 'Month', 
        y = 'Relative Interest', 
        color = 'Search Term', 
-       subtitle = "'juice laundry' is consistently the most searched")
+       subtitle = "juice laundry is consistently the most searched")
   
 lg
 ```
@@ -344,9 +344,9 @@ avg_trend
     ##   <chr>                          <dbl>
     ## 1 "\"juice laundry\""               28
     ## 2 "\"the juice laundry\""            9
-    ## 3 juice laundry                     51
+    ## 3 juice laundry                     47
     ## 4 the juice laundry                 15
-    ## 5 TJL Topic                         30
+    ## 5 TJL Topic                         27
 
 Construct a draft for the bar graph. Remember that bar graphs with y variables specified must clarify that `stat = 'identity'`.
 
@@ -480,7 +480,7 @@ sample_average
     ## 10 2016-12-11 /g/12m9gwg0k                     21.4 
     ## # … with 575 more rows
 
-<u>*Comparision with Correlation*:</u>
+<u>*Comparision via Correlation*:</u>
 
 While one of the search terms may ("juice laundry" in my case) look like the obvious
 

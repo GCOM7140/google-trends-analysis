@@ -113,7 +113,7 @@ and topics, you are ready to repeat the process and expand on that process withi
 
 Our first objective is to ensure that data pulled from gtrendsR is tidy and matches the data obtained directly from the UI (on the same day of course).
 
-Open RStudio and install/load the required packages.
+Open RStudio and load the required packages. Make sure you install them first.
 
 ```{r Load}
 devtools::install_github("PMassicotte/gtrendsR")
@@ -138,8 +138,7 @@ Run gtrendsR and I recommend saving the interest_over_time dataframe (the only o
 ```{r gtrendsR}
 gtrends_list <- gtrends(search_terms, geo = "US", time = time_span)
 
-write_csv(gtrends_list[["interest_over_time"]], 
-          paste0(Sys.Date(), "-google-trends-gtrendsr.csv"))
+# write_csv(gtrends_list[["interest_over_time"]], paste0(Sys.Date(), "-google-trends-gtrendsr.csv"))
 ```
 
 Notice how `gtrendsR` data is tidy without any extra work on our part. Change the column names and types so that they make more sense and rename the topic code.
@@ -211,9 +210,10 @@ setequal(google_trends, gtrends)
 
 The next objective is to replicate the UI's line graph and bar graph within the RStudio IDE.
 
-Download/load the tools we will need for the graphs we want. Utilizing `ggplot` and the `ggtech` add-on package (found <a href="https://github.com/ricardo-bion/ggtech" target="blank">here</a>) will allow us to make visuals that look nearly identical to those that Google Trends displays for us.
+Install/load the tools we will need for the graphs we want. Utilizing `ggplot` and the `ggtech` add-on package (found <a href="https://github.com/ricardo-bion/ggtech" target="blank">here</a>) will allow us to make visuals that look nearly identical to those that Google Trends displays for us.
 
 ```{r Load ggtech}
+# devtools::install_github("ricardo-bion/ggtech", dependencies=TRUE)
 library(gridExtra)
 library(ggtech)
 library(extrafont)
@@ -240,7 +240,7 @@ lg <- ggplot(
   labs(x = 'Month', 
        y = 'Relative Interest', 
        color = 'Search Term', 
-       subtitle = "'juice laundry' is consistently the most searched")
+       subtitle = "juice laundry is consistently the most searched")
   
 lg
 ```
