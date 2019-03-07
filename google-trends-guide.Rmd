@@ -158,17 +158,17 @@ gtrends$week_of <- as.Date(gtrends$week_of) # Rather than datetime default
 gtrends$relative_interest <- as.double(gtrends$relative_interest) # Not Int
 gtrends[gtrends$search_term == URLdecode(topic_url), "search_term"] <- "TJL Topic"
 ```
-``` {r, eval = FALSE}
+``` {r To display gtrends, eval = FALSE}
 gtrends
 ```
 
 Read in the csv you downloaded from the UI. Swap my local path with your local path.
 
-```{r, eval = FALSE}
+```{r csv gets their local path, eval = FALSE}
 csv <- "YOUR/LOCAL/CSV/PATH"
 ```
 
-```{r, eval = TRUE, include = FALSE}
+```{r My hidden csv, eval = TRUE, include = FALSE}
 csv <- "https://raw.githubusercontent.com/MalcolmMashig/google-trends/master/multiTimeline-37.csv"
 ```
 
@@ -177,7 +177,7 @@ raw_google_trends <- read_csv(csv, skip = 2)
 
 ```
 
-``` {r, eval = FALSE}
+``` {r To display raw trends, eval = FALSE}
 raw_google_trends
 ```
 
@@ -206,7 +206,7 @@ google_trends[google_trends$search_term == '"juice laundry": (United States)', "
 google_trends[google_trends$search_term == 'The Juice Laundry: (United States)', "search_term"] <- "TJL Topic"
 ```
 
-``` {r, eval = FALSE}
+``` {r To display tidy trends, eval = FALSE}
 google_trends
 ```
 
@@ -445,7 +445,7 @@ gtrends[sample_average$search_term == gsub("q=", "",
         "search_term"] <- "TJL Topic"
 ```
 
-```{r, eval = FALSE}
+```{r To display sample averages, eval = FALSE}
 sample_average
 ```
 
