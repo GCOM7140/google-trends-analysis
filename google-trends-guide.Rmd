@@ -440,7 +440,7 @@ sample_average <- bind_cols(frame, gtrends_averaged) %>%
 
 sample_average$week_of <- as.Date(sample_average$week_of) 
 # Rather than datetime default
-gtrends[sample_average$search_term == gsub("q=", "", 
+sample_average[sample_average$search_term == gsub("q=", "", 
                                     URLdecode(topic_url)), 
         "search_term"] <- "TJL Topic"
 ```
@@ -451,7 +451,28 @@ sample_average
 
 **<u>*Comparision via Correlation*:</u>**
 
-While one of the search terms ("juice laundry" in my case) may look like the obvious
+While one of the search terms ("juice laundry" in my case) may clearly appear the most similar to the TJL topic, there are systematic and reproducible ways of checking.
+
+We must un-tidy it with spread to check the correlations of the different search_terms with the topic term.
+
+```{r Correlations with topic term}
+y <- sample_average %>% spread(key = "search_term", value = "average_relative_interest")
+
+y
+
+# comparing each search term column with the topic column
+cor(y[, 2], y[, 6]) 
+
+cor(y[, 3], y[, 6])
+
+cor(y[, 4], y[, 6])
+
+cor(y[, 5], y[, 6])
+```
+
+The strongest correlation for me (by far) was *"juice laundry"*.
+
+It makes sense because all relevant searches will definitely include both those words. Various add-ons before or after (like *"the"* or *"cville"*) may or may not be included. That said, the seemingly best `gtrendsR` search terms are those with only the essential words sourrounded by quotes.
 
 ### `thejuicelaundry` dataset {.tabset}
 
