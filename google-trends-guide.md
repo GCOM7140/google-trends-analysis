@@ -353,11 +353,11 @@ avg_trend
     ## # A tibble: 5 x 2
     ##   search_term             avg_interest
     ##   <chr>                          <dbl>
-    ## 1 "\"juice laundry\""               25
-    ## 2 "\"the juice laundry\""            5
-    ## 3 juice laundry                     45
-    ## 4 the juice laundry                 11
-    ## 5 TJL Topic                         25
+    ## 1 "\"juice laundry\""               28
+    ## 2 "\"the juice laundry\""           10
+    ## 3 juice laundry                     46
+    ## 4 the juice laundry                 15
+    ## 5 TJL Topic                         27
 
 Construct a draft for the bar graph. Remember that bar graphs with y variables specified must clarify that `stat = 'identity'`.
 
@@ -389,7 +389,7 @@ bar_graph
 
 ![](google-trends-guide_files/figure-markdown_github/Google%20Bar%20Graph-1.png)
 
-**<u>*Mocking the UI*</u>**
+**<u>*Copying the UI*</u>**
 
 Now we can arrange both graphs side by side as they appear in the UI. It did require some guessing-and-checking in order to decide the scaling that was best.
 
