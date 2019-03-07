@@ -1,77 +1,23 @@
-library(tidyverse)
-
-gtrends_url <- function(start_date, end_date, geo, search_terms) {
-  "%20" <- 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  search_terms[find(" ")]
+get_gtrends_url <- function(start_date, end_date, country, search_terms) {
+  search_terms <- gsub(" ", "%20", d)
+  search_terms <- gsub('"', "%22", d)
   str_c(
-    "https://trends.google.com/trends/explore?date=",
-    start_date,
-    "%20",
-    end_date,
-    "&geo=",
-    geo,
-    "&q=",
-    search_terms[1],
-    ",",
-    search_terms[2])
-  }
-
-gtrends_url("August 9, 2016", "2018-12-31", "US", c("The Juice Laundry", 
-                                            "%22juice laundry%22"))
+    str_c(
+      "https://trends.google.com/trends/explore?date=",
+      start_date,
+      "%20",
+      end_date,
+      "&geo=",
+      country,
+      "&q="
+    ),
+    str_c(
+      search_terms[1],
+      if(length(search_terms) >= 2) {search_terms[2]},
+      if(length(search_terms) >= 3) {search_terms[3]},
+      if(length(search_terms) >= 4) {search_terms[4]},
+      if(length(search_terms) >= 5) {search_terms[5]},
+      sep = ","
+    )
+  )
+}
