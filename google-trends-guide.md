@@ -6,11 +6,12 @@ A manual for *intelligent*, *reproducible*, and *programmatic* analysis of *Goog
 -   [Understanding *Google Trends*](#understanding-google-trends)
 -   [Navigating the User Interface (UI)](#navigating-the-user-interface-ui)
 -   [Testing the `gtrendsR` package](#testing-the-gtrendsr-package)
--   [Replicating the *Google Trends* visuals](#replicating-the-google-trends-visuals)
--   [*TJL* Search Terms Analysis](#tjl-search-terms-analysis)
+-   [`get_gtrends_url` function](#get_gtrends_url-function)
+-   [Replicating the UI](#replicating-the-ui)
+-   [*TJL* search terms analysis](#tjl-search-terms-analysis)
 -   [`thejuicelaundry` dataset](#thejuicelaundry-dataset)
--   [Corner Juice Search Terms Comparision](#corner-juice-search-terms-comparision)
--   [Corner Juice vs. TJL](#corner-juice-vs.-tjl)
+-   [*Corner Juice* search terms comparision](#corner-juice-search-terms-comparision)
+-   [*Corner Juice* vs. *TJL*](#corner-juice-vs.-tjl)
 
 ------------------------------------------------------------------------
 
@@ -22,7 +23,7 @@ Then you can start to use it, first through the User Interface (UI) found <a hre
 
 The benefits of using an R package are numerous and will become more and more apparent throughout this guide. To summarize, an R package allows your analysis to be more *intelligent*, *reproducible*, and *programmatic*.
 
-We will walk you through using Google Trends, pointing out some nuances along the way, and then we will show you how to generate the same exact data (and even the same visuals) with the `gtrendsR` package. We will apply everything to *The Juice Laundry* (TJL), demonstrating methods to extract data that is most useful and most accurate, and comparing that data to local competition, namely *Corner Juice*.
+We will walk you through using Google Trends, pointing out some nuances along the way, and then we will show you how to generate the same exact data (and even the same visuals) with the `gtrendsR` package. We will apply everything to <a href="https://www.thejuicelaundry.com" target="blank">*The Juice Laundry*</a> (TJL), demonstrating methods to extract data that is most useful and most accurate, and comparing that data to local competition, namely *Corner Juice*.
 
 ------------------------------------------------------------------------
 
@@ -125,19 +126,22 @@ library(tidyverse)
 Assign the time period and search terms we used in the UI. The topic (represented in the URL as a code) must be decoded.
 
 ``` r
-time_span <- "2016-10-09 2018-12-31"
-topic_url <- "q=%2Fg%2F12m9gwg0k"
+start_date <- "2016-10-09"
+end_date <- "2018-12-31"
+country <- "US"
+time_span <- str_c(start_date, end_date, sep = " ")
+topic_url <- "%2Fg%2F12m9gwg0k"
 search_terms <- c("the juice laundry", 
                   '"the juice laundry"', 
                   "juice laundry",
                   '"juice laundry"', 
-                  gsub("q=", "", URLdecode(topic_url)))
+                  URLdecode(topic_url))
 ```
 
 Run gtrendsR and I recommend saving the interest\_over\_time dataframe (the only one we are concerned with) as a csv file with today's date.
 
 ``` r
-gtrends_list <- gtrends(search_terms, geo = "US", time = time_span)
+gtrends_list <- gtrends(search_terms, country, time = time_span)
 
 # write_csv(gtrends_list[["interest_over_time"]], paste0(Sys.Date(), "-google-trends-gtrendsr.csv"))
 ```
@@ -154,9 +158,7 @@ gtrends <- gtrends_list[["interest_over_time"]] %>%
 
 gtrends$week_of <- as.Date(gtrends$week_of) # Rather than datetime default
 gtrends$relative_interest <- as.double(gtrends$relative_interest) # Not Int
-gtrends[gtrends$search_term == gsub("q=", "", 
-                                    URLdecode(topic_url)), 
-        "search_term"] <- "TJL Topic"
+gtrends[gtrends$search_term == URLdecode(topic_url), "search_term"] <- "TJL Topic"
 ```
 
 ``` r
@@ -218,7 +220,52 @@ setequal(google_trends, gtrends)
 
 ------------------------------------------------------------------------
 
-### Replicating the *Google Trends* visuals
+### `get_gtrends_url` function
+
+Enter the parameters you desire and retrieve the URL for that exact *Google Trends* UI. Here you do not need to decode the topic terms. Then again, topic terms are not practical for this function considering you need the URL to get their codes in the first place.
+
+``` r
+start_date <- "2016-10-09"
+end_date <- "2018-12-31"
+country <- "US"
+search_terms <- c("the juice laundry", 
+                  '"the juice laundry"', 
+                  "juice laundry",
+                  '"juice laundry"', 
+                  "%2Fg%2F12m9gwg0k")
+
+get_gtrends_url <- function(start_date, end_date, country, search_terms) {
+  search_terms <- gsub(" ", "%20", search_terms)
+  search_terms <- gsub('"', "%22", search_terms)
+  str_c(
+    str_c(
+      "https://trends.google.com/trends/explore?date=",
+      start_date,
+      "%20",
+      end_date,
+      "&geo=",
+      country,
+      "&q="
+    ),
+    str_c(
+      search_terms[1],
+      if(length(search_terms) >= 2) {search_terms[2]},
+      if(length(search_terms) >= 3) {search_terms[3]},
+      if(length(search_terms) >= 4) {search_terms[4]},
+      if(length(search_terms) >= 5) {search_terms[5]},
+      sep = ","
+    )
+  )
+}
+
+get_gtrends_url(start_date, end_date, country, search_terms)
+```
+
+    ## [1] "https://trends.google.com/trends/explore?date=2016-10-09%202018-12-31&geo=US&q=the%20juice%20laundry,%22the%20juice%20laundry%22,juice%20laundry,%22juice%20laundry%22,%2Fg%2F12m9gwg0k"
+
+------------------------------------------------------------------------
+
+### Replicating the UI
 
 The next objective is to replicate the UI's line graph and bar graph within the RStudio IDE.
 
@@ -252,7 +299,8 @@ lg <- ggplot(
   labs(x = 'Month', 
        y = 'Relative Interest', 
        color = 'Search Term', 
-       subtitle = "juice laundry is consistently the most searched")
+       subtitle = "juice laundry is consistently the most searched",
+       caption = "https://goo.gl/FZPu18")
   
 lg
 ```
@@ -305,11 +353,11 @@ avg_trend
     ## # A tibble: 5 x 2
     ##   search_term             avg_interest
     ##   <chr>                          <dbl>
-    ## 1 "\"juice laundry\""               30
-    ## 2 "\"the juice laundry\""           10
-    ## 3 juice laundry                     50
-    ## 4 the juice laundry                 16
-    ## 5 TJL Topic                         29
+    ## 1 "\"juice laundry\""               25
+    ## 2 "\"the juice laundry\""            5
+    ## 3 juice laundry                     45
+    ## 4 the juice laundry                 11
+    ## 5 TJL Topic                         25
 
 Construct a draft for the bar graph. Remember that bar graphs with y variables specified must clarify that `stat = 'identity'`.
 
@@ -341,7 +389,7 @@ bar_graph
 
 ![](google-trends-guide_files/figure-markdown_github/Google%20Bar%20Graph-1.png)
 
-**<u>*Replicating the UI*</u>**
+**<u>*Mocking the UI*</u>**
 
 Now we can arrange both graphs side by side as they appear in the UI. It did require some guessing-and-checking in order to decide the scaling that was best.
 
@@ -357,13 +405,13 @@ Here is the example UI again for comparision:
 
 ------------------------------------------------------------------------
 
-### *TJL* Search Terms Analysis
+### *TJL* search terms analysis
 
 One of the main purposes of Google Trends is to benchmark relative search interest against relative search interest throughout the past. That said, the next objective is to decide which of the TJL search terms is most appropriate to follow and use as the standard. We could simply resort to the Topic search and trust that the Google algorithm knows best, but since not all entities have a Topic as defined by Google (*Corner Juice* for example), it might be intuitive to find the search term that draws a relative interest most similar to that of the Topic. That way, we can observe what features of a search are best when the entity we search for has no Topic. For instance, do the most accurate search terms contain all words in the entity's official name or only the vital ones? Are the terms most accurate when surrounded in quotes? Etcetera.
 
 Before we start to compare the TJL search terms and their similarity to the *TJL* Topic, we must ensure that the data is reliable by taking many samples. Here, you will begin to see the advantage of using R and `gtrendsR` to analyze Google Trends data.
 
-<u>Sampling for Reliability</u>
+**<u>Sampling for Reliability</u>**
 
 Since 24 hours must pass before a new sample with new data is generated, I will provide thirteen samples (with the same parameters as above). All samples were collected as csv files after I ran `gtrendsR` on thirteen seperate days during the end of February and beginning of March 2019.
 
@@ -427,31 +475,18 @@ sample_average$week_of <- as.Date(sample_average$week_of)
 gtrends[sample_average$search_term == gsub("q=", "", 
                                     URLdecode(topic_url)), 
         "search_term"] <- "TJL Topic"
+```
 
+``` r
 sample_average
 ```
 
-    ## # A tibble: 585 x 3
-    ##    week_of    search_term  average_relative_interest
-    ##    <date>     <chr>                            <dbl>
-    ##  1 2016-10-09 /g/12m9gwg0k                     10.7 
-    ##  2 2016-10-16 /g/12m9gwg0k                     20.2 
-    ##  3 2016-10-23 /g/12m9gwg0k                     17.8 
-    ##  4 2016-10-30 /g/12m9gwg0k                     11.8 
-    ##  5 2016-11-06 /g/12m9gwg0k                      3.85
-    ##  6 2016-11-13 /g/12m9gwg0k                     14.2 
-    ##  7 2016-11-20 /g/12m9gwg0k                     16.9 
-    ##  8 2016-11-27 /g/12m9gwg0k                     12.9 
-    ##  9 2016-12-04 /g/12m9gwg0k                     35.5 
-    ## 10 2016-12-11 /g/12m9gwg0k                     21.4 
-    ## # … with 575 more rows
+**<u>*Comparision via Correlation*:</u>**
 
-<u>*Comparision via Correlation*:</u>
-
-While one of the search terms may ("juice laundry" in my case) look like the obvious
+While one of the search terms ("juice laundry" in my case) may look like the obvious
 
 ### `thejuicelaundry` dataset
 
-### Corner Juice Search Terms Comparision
+### *Corner Juice* search terms comparision
 
-### Corner Juice vs. TJL
+### *Corner Juice* vs. *TJL*

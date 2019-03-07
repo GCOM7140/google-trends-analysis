@@ -1,6 +1,6 @@
 get_gtrends_url <- function(start_date, end_date, country, search_terms) {
-  search_terms <- gsub(" ", "%20", d)
-  search_terms <- gsub('"', "%22", d)
+  search_terms <- gsub(" ", "%20", search_terms)
+  search_terms <- gsub('"', "%22", search_terms)
   str_c(
     str_c(
       "https://trends.google.com/trends/explore?date=",
