@@ -2,7 +2,6 @@ The Google Trends R Guide
 ================
 A manual for *intelligent*, *reproducible*, and *programmatic* analysis of *Google Trends* search interest over time with the `gtrendsR` package
 
-### Table of Contents
 -   [Overview](#overview)
 -   [Understanding *Google Trends*](#understanding-google-trends)
 -   [Navigating the User Interface (UI)](#navigating-the-user-interface-ui)
@@ -131,10 +130,10 @@ end_date <- "2018-12-31"
 country <- "US"
 time_span <- str_c(start_date, end_date, sep = " ")
 topic_url <- "%2Fg%2F12m9gwg0k"
-search_terms <- c("the juice laundry", 
-                  '"the juice laundry"', 
+search_terms <- c('"juice laundry"', 
+                  '"the juice laundry"',
                   "juice laundry",
-                  '"juice laundry"', 
+                  "the juice laundry",
                   URLdecode(topic_url))
 ```
 
@@ -353,11 +352,11 @@ avg_trend
     ## # A tibble: 5 x 2
     ##   search_term             avg_interest
     ##   <chr>                          <dbl>
-    ## 1 "\"juice laundry\""               24
-    ## 2 "\"the juice laundry\""            5
-    ## 3 juice laundry                     44
-    ## 4 the juice laundry                 10
-    ## 5 TJL Topic                         24
+    ## 1 "\"juice laundry\""               18
+    ## 2 "\"the juice laundry\""            4
+    ## 3 juice laundry                     32
+    ## 4 the juice laundry                  8
+    ## 5 TJL Topic                         17
 
 Construct a draft for the bar graph. Remember that bar graphs with y variables specified must clarify that `stat = 'identity'`.
 
@@ -560,7 +559,7 @@ I have repeated the `gtrendsR` process but this time with just *"juice laundry"*
 
 You can find this web UI at the following link:
 
-    ## [1] "https://trends.google.com/trends/explore?date=2016-10-09%202018-12-31&geo=US&q=%22juice%20laundry%22,%22corner%20juice%22"
+    ## [1] "https://trends.google.com/trends/explore?date=2016-10-09%202018-12-31&geo=US&q=%22corner%20juice%22,%22juice%20laundry%22"
 
 ------------------------------------------------------------------------
 

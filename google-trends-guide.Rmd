@@ -129,10 +129,10 @@ end_date <- "2018-12-31"
 country <- "US"
 time_span <- str_c(start_date, end_date, sep = " ")
 topic_url <- "%2Fg%2F12m9gwg0k"
-search_terms <- c("the juice laundry", 
-                  '"the juice laundry"', 
+search_terms <- c('"juice laundry"', 
+                  '"the juice laundry"',
                   "juice laundry",
-                  '"juice laundry"', 
+                  "the juice laundry",
                   URLdecode(topic_url))
 ```
 
@@ -490,7 +490,7 @@ start_date <- "2016-10-09"
 end_date <- "2018-12-31"
 country <- "US"
 time_span <- str_c(start_date, end_date, sep = " ")
-search_terms <- c('"juice laundry"', '"corner juice"')
+search_terms <- c('"corner juice"', '"juice laundry"')
 
 gtrends_list <- gtrends(search_terms, country, time = time_span)
 
