@@ -297,7 +297,7 @@ lg <- ggplot(
        y = 'Relative Interest', 
        color = 'Search Term', 
        title = "Interest over Time",
-       caption = "https://goo.gl/FZPu18")
+       caption = "https://goo.gl/XV8kHd")
   
 lg
 ```
@@ -353,7 +353,7 @@ avg_trend
     ## 1 "\"juice laundry\""               24
     ## 2 "\"the juice laundry\""            7
     ## 3 juice laundry                     40
-    ## 4 the juice laundry                 12
+    ## 4 the juice laundry                 13
     ## 5 TJL Topic                         24
 
 Construct a draft for the bar graph. Remember that bar graphs with y variables specified must clarify that `stat = 'identity'`.
@@ -399,7 +399,7 @@ ui_copy <- grid.arrange(bar_graph, line_graph, ncol = 2, widths = c(1, 6))
 ![](google-trends-guide_files/figure-markdown_github/ui-replication-1.png)
 
 ``` r
-# ggsave("ui_copy.png", ui_copy)
+ggsave("ui_copy.png", ui_copy)
 ```
 
 Here is the example UI again for comparision:
