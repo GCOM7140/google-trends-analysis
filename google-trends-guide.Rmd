@@ -516,7 +516,7 @@ lg <- ggplot(
        y = 'Relative Interest', 
        color = 'Search Term', 
        subtitle = "TJL consistently garners higher search interest",
-       caption = "https://goo.gl/JALDQP")
+       caption = "https://goo.gl/69E5TF")
   
 lg
 ```
@@ -526,7 +526,7 @@ line_graph <- lg +
   theme_tech(theme = 'google') + 
   scale_color_tech(theme = 'google') +
   guides(color = guide_legend(nrow = 1)) +
-  theme(legend.position = 'bottom', 
+  theme(legend.position = 'top', 
         legend.direction = 'vertical',
         axis.text.x = element_text(angle = 45, hjust = 1)) + 
   scale_x_date(date_labels = "%m/%Y", date_breaks = "2 months")
@@ -543,7 +543,7 @@ avg_trend
 
 bg <- ggplot(avg_trend, aes(x = search_term, y = avg_interest)) + 
   geom_bar(stat = 'identity') +
-  labs(x = 'Search Term', y = 'Average Interest')
+  labs(x = 'Average Interest')
 
 bg
 ```
@@ -555,15 +555,18 @@ bar_graph <- bg +
   geom_bar(stat = 'identity', fill = google_colors) + 
   theme_tech(theme = 'google') +
   scale_fill_tech(theme = 'google') +
-  theme(axis.text.x = element_text(angle = 55, hjust = 1)) + 
-  geom_text(aes(label = avg_interest, vjust = -1)) +
+  theme(axis.text.x = element_blank(),
+        axis.title.y = element_blank(),
+        axis.title.x = element_text(size = 11),
+        axis.ticks.x = element_blank()) + 
   ylim(0, 100)
+  
 
 bar_graph
 ```
 
 ```{r tjl-vs-cj-ui-replication, echo = FALSE}
-comp_ui_copy <- grid.arrange(bar_graph, line_graph, ncol = 2, widths = c(2, 5))
+comp_ui_copy <- grid.arrange(bar_graph, line_graph, ncol = 2, widths = c(1, 6))
 # ggsave("tjl-vs-cj-ui_copy.png", ui_copy)
 ```
 

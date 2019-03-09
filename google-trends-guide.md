@@ -221,7 +221,7 @@ setequal(google_trends, gtrends)
 
 ### `get_gtrends_url` function
 
-Enter the parameters you desire and retrieve the URL for that exact *Google Trends* UI. Here you do not need to decode the topic terms. Then again, topic terms are not practical for this function considering you need the URL to get their codes in the first place.
+Enter the parameters you desire and retrieve the URL for the *Google Trends* Web UI with those parameters. Here you do not need to decode the topic terms. Then again, topic terms are not practical for this function considering you need the URL to get their codes in the first place.
 
 ``` r
 start_date <- "2016-10-09"
@@ -350,11 +350,11 @@ avg_trend
     ## # A tibble: 5 x 2
     ##   search_term             avg_interest
     ##   <chr>                          <dbl>
-    ## 1 "\"juice laundry\""               24
-    ## 2 "\"the juice laundry\""            7
-    ## 3 juice laundry                     40
+    ## 1 "\"juice laundry\""               25
+    ## 2 "\"the juice laundry\""            8
+    ## 3 juice laundry                     42
     ## 4 the juice laundry                 13
-    ## 5 TJL Topic                         24
+    ## 5 TJL Topic                         25
 
 Construct a draft for the bar graph. Remember that bar graphs with y variables specified must clarify that `stat = 'identity'`.
 
@@ -399,7 +399,7 @@ ui_copy <- grid.arrange(bar_graph, line_graph, ncol = 2, widths = c(1, 6))
 ![](google-trends-guide_files/figure-markdown_github/ui-replication-1.png)
 
 ``` r
-ggsave("ui_copy.png", ui_copy)
+# ggsave("ui_copy.png", ui_copy)
 ```
 
 Here is the example UI again for comparision:
