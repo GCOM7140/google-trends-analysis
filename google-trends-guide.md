@@ -68,29 +68,29 @@ Along the lines of what this guide will show you, *Google Trends* is most practi
 
 If you do not already have it open, go to <a href="https://trends.google.com/trends/?geo=US" target="blank">Google Trends</a>.
 
-**<u>*Step 1:*</u>** Enter *the juice laundry* as your search term. Then change *'Past 12 Months'* to a custom time range from October 9, 2016 (10-9-2016) to the end of 2018 (12-31-2018). These dates coincide with the time period of the `thejuicelaundry` package's *Square* transaction data.
+**<u>*Step 1:*</u>** Enter *"juice laundry"* (in quotes) as your search term. Then change *'Past 12 Months'* to a custom time range from October 9, 2016 (10-9-2016) to the end of 2018 (12-31-2018). These dates coincide with the time period of the `thejuicelaundry` package's *Square* transaction data.
 
 Notice that you can also change the location, category, and search type (web, image, etc.) parameters, but leave them alone.
 
-**<u>*Step 2:*</u>** Enter *The Juice Laundry* (capitalized this time) as a second search term.
+**<u>*Step 2:*</u>** Enter *"Juice Laundry"* (in quotes and capitalized this time) as a second search term.
 
 Both terms should say *'search term'* under them. You will notice that only the red line shows. This is because the **search terms are case insensitive** and the trendlines are identical.
 
-**<u>*Step 3:*</u>** Replace the second search term with *"the juice laundry"* (in quotes this time).
+**<u>*Step 3:*</u>** Replace the second search term with *"the juice laundry"* (in quotes).
 
-You will notice that the trendlines are different and that is because sourrounding the term in quotes creates a totally different query based on *Google's* algorithm. Navigate <a href="https://support.google.com/trends/answer/4359582?hl=en" target="blank">here</a> to see the results of queries that are different but that share similar terms. The takeaway is that **the algorithm is stricter on quoted terms** (because it only counts searches with that exact phrase) and the trendlines should reflect this (*"the juice laundry"* being generally lower then its non-quoted counterpart).
+The resulting trendlines will be unique, displaying generally greater search interest for the search term without *"the"* (an additional restriction) in them -- which makes sense. Take note of how the interest over time for the existing trendline (the blue) shrinks as you add the new search term. Remember that this is because **search interest for one term is relative to the search interest for another**.
 
-**<u>*Step 4:*</u>** Add *juice laundry* and the quoted *"juice laundry"*, in that order, as two more search terms.
+**<u>*Step 4:*</u>** Add *juice laundry* (not in quotes) and *the juice laundry* (not in quotes), in that order, as two more search terms.
 
-The resulting trendlines will be unique, displaying generally greater search interest than search terms with *"the"* (an additional restriction) in them -- which makes sense. Take note of how the interest over time for existing trendlines (the blue and red in this case) shrink as you added the new search terms. Remember that this is because **search interest for one term is relative to the search interest for another**.
+You will notice that the trendlines are different and that is because the quotes around the terms creates a totally different query based on *Google's* algorithm. Navigate <a href="https://support.google.com/trends/answer/4359582?hl=en" target="blank">here</a> to see the results of queries that are different but that share similar terms. The takeaway is that **the algorithm is stricter on quoted terms** (because it only counts searches with that exact phrase) and the trendlines should reflect this (*"the juice laundry"* for example being generally lower then its non-quoted counterpart).
 
-**<u>*Step 5:*</u>** Finally, add *The Juice L aundry* as another search term, but this time choose the option that states *'Juice Shop in Charlottesville, VA'* underneath it.
+**<u>*Step 5:*</u>** Finally, add *The Juice Laundry* as another search term, but this time choose the option that states *'Juice Shop in Charlottesville, VA'* underneath it.
 
 You have added what is known as a *topic*. According to Google, **a topic is a group of terms that share a concept**. For example, if you search the topic *"London,"* your search includes results for topics such as *"Capital of the UK"* and *"Londres"* which is *"London"* in Spanish. For all we know, Google's algorithm may be grouping search terms like those we have (more or less) to form the topic of *The Juice Laundry*, but we cannot know for sure what it is doing.
 
 Your screen should look very similar to the photo below. Because samples are different every day, however, the trendlines will not look exactly the same.
 
-![](https://raw.githubusercontent.com/MalcolmMashig/google-trends/master/tjl-gtrends-ui.png)
+![](https://raw.githubusercontent.com/MalcolmMashig/google-trends/master/google-trends-ui.png)
 
 **<u>*Step 6:*</u>** Scroll your mouse over the trendlines and witness how **relative search interest is aggregated for week intervals**.
 
@@ -288,8 +288,6 @@ font_import(pattern = 'product-sans.ttf', prompt=FALSE)
 
 **<u>*Line Graph:*</u>**
 
-Remember that titles should state conclusions that can be made based on the graph. Make sure that the title I supplied is true and make sure it is a subtitle (a title will be too large later on).
-
 ``` r
 lg <- ggplot(
   gtrends, aes(x = week_of, y = relative_interest, color = search_term)
@@ -298,7 +296,7 @@ lg <- ggplot(
   labs(x = 'Month', 
        y = 'Relative Interest', 
        color = 'Search Term', 
-       subtitle = "Most searched: juice laundry",
+       title = "Interest over Time",
        caption = "https://goo.gl/FZPu18")
   
 lg
@@ -326,8 +324,8 @@ scale_color_tech <- function(theme="airbnb", tech_key = list(
 line_graph <- lg +
   theme_tech(theme = 'google') + 
   scale_color_tech(theme = 'google') +
-  guides(color = guide_legend(nrow = 3)) +
-  theme(legend.position = 'bottom', 
+  guides(color = guide_legend(nrow = 2)) +
+  theme(legend.position = 'top', 
         legend.direction = 'vertical',
         axis.text.x = element_text(angle = 45, hjust = 1)) + 
   scale_x_date(date_labels = "%m/%Y", date_breaks = "2 months")
@@ -352,18 +350,18 @@ avg_trend
     ## # A tibble: 5 x 2
     ##   search_term             avg_interest
     ##   <chr>                          <dbl>
-    ## 1 "\"juice laundry\""               18
-    ## 2 "\"the juice laundry\""            4
-    ## 3 juice laundry                     32
-    ## 4 the juice laundry                  8
-    ## 5 TJL Topic                         17
+    ## 1 "\"juice laundry\""               24
+    ## 2 "\"the juice laundry\""            7
+    ## 3 juice laundry                     40
+    ## 4 the juice laundry                 12
+    ## 5 TJL Topic                         24
 
 Construct a draft for the bar graph. Remember that bar graphs with y variables specified must clarify that `stat = 'identity'`.
 
 ``` r
 bg <- ggplot(avg_trend, aes(x = search_term, y = avg_interest)) + 
   geom_bar(stat = 'identity') +
-  labs(x = 'Search Term', y = 'Average Interest')
+  labs(x = 'Average Interest')
 
 bg
 ```
@@ -379,8 +377,10 @@ bar_graph <- bg +
   geom_bar(stat = 'identity', fill = google_colors) + 
   theme_tech(theme = 'google') +
   scale_fill_tech(theme = 'google') +
-  theme(axis.text.x = element_text(angle = 80, hjust = 1)) + 
-  geom_text(aes(label = avg_interest, vjust = -1)) +
+  theme(axis.text.x = element_blank(),
+        axis.title.y = element_blank(),
+        axis.title.x = element_text(size = 11),
+        axis.ticks.x = element_blank()) + 
   ylim(0, 100)
 
 bar_graph
@@ -393,7 +393,7 @@ bar_graph
 Now we can arrange both graphs side by side as they appear in the UI. It did require some guessing-and-checking in order to decide the scaling that was best.
 
 ``` r
-ui_copy <- grid.arrange(bar_graph, line_graph, ncol = 2, widths = c(2, 5))
+ui_copy <- grid.arrange(bar_graph, line_graph, ncol = 2, widths = c(1, 6))
 ```
 
 ![](google-trends-guide_files/figure-markdown_github/ui-replication-1.png)
@@ -404,7 +404,7 @@ ui_copy <- grid.arrange(bar_graph, line_graph, ncol = 2, widths = c(2, 5))
 
 Here is the example UI again for comparision:
 
-![](https://raw.githubusercontent.com/MalcolmMashig/google-trends/master/tjl-gtrends-ui.png)
+![](https://raw.githubusercontent.com/MalcolmMashig/google-trends/master/google-trends-ui.png)
 
 ------------------------------------------------------------------------
 
