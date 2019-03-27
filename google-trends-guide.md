@@ -350,11 +350,11 @@ avg_trend
     ## # A tibble: 5 x 2
     ##   search_term             avg_interest
     ##   <chr>                          <dbl>
-    ## 1 "\"juice laundry\""               25
+    ## 1 "\"juice laundry\""               29
     ## 2 "\"the juice laundry\""            8
-    ## 3 juice laundry                     42
-    ## 4 the juice laundry                 13
-    ## 5 TJL Topic                         25
+    ## 3 juice laundry                     50
+    ## 4 the juice laundry                 14
+    ## 5 TJL Topic                         29
 
 Construct a draft for the bar graph. Remember that bar graphs with y variables specified must clarify that `stat = 'identity'`.
 
