@@ -8,6 +8,7 @@ output:
 
 ```{r Setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+source("https://raw.githubusercontent.com/MalcolmMashig/google-trends/master/R/get_gtrends_url_function.R")
 ```
 
 ***
@@ -152,7 +153,7 @@ gtrends <- gtrends_list[["interest_over_time"]] %>%
   rename('relative_interest' = 'hits', 
          'week_of' = 'date', 
          'search_term' = 'keyword') %>% 
-  select(c('week_of', 'search_term', 'relative_interest'))
+  select(c('week_of', 'search_term', 'relative_interest')) 
 
 gtrends$week_of <- as.Date(gtrends$week_of) # Rather than datetime default
 gtrends$relative_interest <- as.double(gtrends$relative_interest) # Not Int
@@ -236,30 +237,6 @@ search_terms <- c("the juice laundry",
                   "juice laundry",
                   '"juice laundry"', 
                   "%2Fg%2F12m9gwg0k")
-
-get_gtrends_url <- function(start_date, end_date, country, search_terms) {
-  search_terms <- gsub(" ", "%20", search_terms)
-  search_terms <- gsub('"', "%22", search_terms)
-  str_c(
-    str_c(
-      "https://trends.google.com/trends/explore?date=",
-      start_date,
-      "%20",
-      end_date,
-      "&geo=",
-      country,
-      "&q="
-    ),
-    str_c(
-      search_terms[1],
-      if(length(search_terms) >= 2) {search_terms[2]},
-      if(length(search_terms) >= 3) {search_terms[3]},
-      if(length(search_terms) >= 4) {search_terms[4]},
-      if(length(search_terms) >= 5) {search_terms[5]},
-      sep = ","
-    )
-  )
-}
 
 get_gtrends_url(start_date, end_date, country, search_terms)
 ```
