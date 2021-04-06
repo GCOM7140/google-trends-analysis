@@ -99,7 +99,7 @@ If you ever need to install the {trendyy} package from GitHub, you can
 with:
 
 ``` r
-remotes::install_github("josiahparry/trendyy", force = TRUE)
+remotes::install_github("josiahparry/trendyy")
 ```
 
 Here are the library calls that are needed to go through the steps that
@@ -117,14 +117,15 @@ the end of the tunnel. It’s a graph that compares search interest for
 the University of Virginia’s Google Trends topic in Virginia to gross
 sales at The Juice Laundry’s location on the Corner. As you might
 expect, the correlation between these two trendlines is positive and
-significant (in the neighborhood of .38).
+significant (in the neighborhood of .62).
 
 ### Step 1
 
 Use the `trendyy::trendy()` function to query Google Trends for search
-interest related to the University of Virginia in 2019 in Virginia,
-using the `search_terms`, `from`, `to`, and `geo` arguments,
-accordingly.
+interest in Virginia related to the University of Virginia from the
+grand opening of The Juice Laundry’s location on the Corner to most
+recent date transaction data is available in the {juicelaundry} package,
+using the `search_terms`, `from`, `to`, and `geo` arguments.
 
 Note that:  
 \* The search term or topic you specify for the `search_terms` argument
@@ -308,12 +309,16 @@ console and hitting enter should print the following:
 
 ### Step 6
 
-Join the `search_interest` dataset with the `gross_sales_corner`
-dataset:
+Join the `search_interest` dataset with the `gross_sales_corner` dataset
+and replace values of the `gross_sales_normalized` variable with `NA`
+using the {dplyr} `na_replace()` function since weeks that do not have
+gross sales data indicate that The Juice Laundry did not record any
+revenue:
 
 ``` r
 search_interest %>%    
-   left_join(gross_sales_corner) ->
+   left_join(gross_sales_corner) %>% 
+   mutate(gross_sales_normalized = replace_na(gross_sales_normalized, 0)) ->
    search_and_gross_sales
 ```
 
@@ -394,10 +399,6 @@ search_and_gross_sales %>%
    select(-week) %>% 
    cor()
 ```
-
-    ##                        interest_normalized gross_sales_normalized
-    ## interest_normalized                      1                     NA
-    ## gross_sales_normalized                  NA                      1
 
 ## Wrap-up discussion
 
